@@ -1,0 +1,21 @@
+.scroll-hidden {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+.anime {
+  animation: popup 0.5s linear;
+}
+@keyframes popup {
+  from {
+    scale: 0.5;
+    opacity: 0;
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+  }
+}
