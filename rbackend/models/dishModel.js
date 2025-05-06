@@ -13,7 +13,11 @@ const item = new mongoose.Schema({
   },
   dishCategory:{
     type: String,
-  }
+  },
+  dishDiscription: {
+    type: String,
+    require: true,
+  },
 });
 const dishSchema=mongoose.model("dish",item)
 module.exports=dishSchema;

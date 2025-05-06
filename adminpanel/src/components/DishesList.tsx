@@ -39,21 +39,22 @@ function DishesList({ setIsShowDishes }: ManageDishes) {
   }, [category, dishesDetail]);
   return (
     <>
-    {category && <div
-        className="h-[170px] w-[160px] border-2 border-cyan-400 border-dashed flex flex-col justify-center items-center cursor-pointer "
-        onClick={() => setIsShowDishes(true)}
-      >
-        <div className="text-cyan-600 text-3xl ">
-          <MdAddBox />
+      {category && (
+        <div
+          className="h-[170px] w-[160px] border-2 border-cyan-400 border-dashed flex flex-col justify-center items-center cursor-pointer "
+          onClick={() => setIsShowDishes(true)}
+        >
+          <div className="text-cyan-600 text-3xl ">
+            <MdAddBox />
+          </div>
+          <p className="text-center text-sm pt-2 px-2 font-semibold">
+            Add New Dish to {category}
+          </p>
         </div>
-        <p className="text-center text-sm pt-2 px-2 font-semibold">
-          Add New Dish to {category}
-        </p>
-      </div>}
-      
+      )}
 
       {finalDish?.map((e) => (
-        <div className=" relative  h-[170px] w-[160px] border-1 cursor-pointer border-gray-400 flex flex-col justify-between   ">
+        <div className=" relative -z-10 h-[170px] w-[160px] border-1 cursor-pointer border-gray-400 flex flex-col justify-between   ">
           <div className="absolute top-0">
             <FaRegSquare />
           </div>
@@ -65,7 +66,7 @@ function DishesList({ setIsShowDishes }: ManageDishes) {
             />
           </div>
           <div className="ps-1 py-2 ">
-            <p className="text-sm text-gray-500">Dessert</p>
+            <p className="text-sm text-gray-500">{e.dishCategory}</p>
             <p className=" text-gray-800 text-sm font-semibold">{e.dishName}</p>
             <p className="font-semibold">${e.dishPrice}</p>
           </div>

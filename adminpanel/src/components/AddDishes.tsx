@@ -15,6 +15,7 @@ interface DishFormValues {
   dishName: string;
   dishPrice: number;
   dishCategory:string;
+  dishDiscription:string
 }
 
 function AddDishes({ setIsShowDishes }: ManageDishes) {
@@ -32,6 +33,7 @@ function AddDishes({ setIsShowDishes }: ManageDishes) {
     formData.append("dishName", data.dishName);
     formData.append("dishPrice", data.dishPrice.toString());
     formData.append("dishCategory", data.dishCategory);
+    formData.append("dishDiscription", data.dishDiscription);
 
     if (data.dishImage) {
       formData.append("dishImage", data.dishImage);
@@ -53,7 +55,7 @@ function AddDishes({ setIsShowDishes }: ManageDishes) {
   },[category,setValue])
   return (
     <div className="fixed top-0 h-screen backdrop-blur-[2px] bg-[#0000006e] w-screen flex items-center justify-center  ">
-      <div className="anime h-[400px] w-[500px] flex flex-col  justify-between relative  py-4 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.5)] px-8  bg-white">
+      <div className="anime h-[420px] w-[500px] flex flex-col  justify-between relative  py-2 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.5)] px-8  bg-white">
         <div
           className="right-4  absolute cursor-pointer"
           onClick={() => setIsShowDishes(false)}
@@ -92,9 +94,7 @@ function AddDishes({ setIsShowDishes }: ManageDishes) {
             />
             
           </div>
-
-          <div className="flex flex-col pb-3 h-full w-full  gap-3">
-            <div className="flex flex-col gap-1 ">
+          <div className="flex flex-col gap-1 ">
               <label
                 htmlFor=""
                 className="text-lg  text-gray-800 font-semibold "
@@ -111,6 +111,26 @@ function AddDishes({ setIsShowDishes }: ManageDishes) {
                 <span className="text-red-600">Enter Dish name</span>
               )}
             </div>
+
+          <div className="flex flex-col pb-3 h-full w-full  gap-3">
+            <div className="flex flex-col gap-1 ">
+              <label
+                htmlFor=""
+                className="text-lg  text-gray-800 font-semibold "
+              >
+                Dish Discription
+              </label>
+              <input
+                type="text"
+                className=" w-full border-1 outline-cyan-700 border-cyan-500 py-1 px-2 rounded-lg"
+                placeholder="Enter dishes Discreiption"
+                {...register("dishDiscription", { required: "true" })}
+              />
+              {errors.dishDiscription && errors.dishDiscription.type === "requires" && (
+                <span className="text-red-600">Enter Dish name</span>
+              )}
+            </div>
+       
             <div className="flex flex-col text-gray-800  gap-1 ">
               <label htmlFor="" className="text-lg font-semibold ">
                 Price$

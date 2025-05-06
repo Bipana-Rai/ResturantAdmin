@@ -81,6 +81,7 @@ interface Dishes {
   dishPrice: number;
   dishImage?: string;
   dishCategory:string;
+  dishDiscription:string
 }
 interface CategoryState {
   loading: boolean;

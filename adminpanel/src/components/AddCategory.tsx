@@ -46,7 +46,7 @@ function AddCategory({ setIsShowCategory }: ManageDishes) {
     }
   };
 
-  
+                                                      
   return (
     <>
       <div className="fixed top-0 h-screen backdrop-blur-[2px] bg-[#0000006e] w-screen flex items-center justify-center  ">

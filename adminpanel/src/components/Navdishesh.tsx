@@ -6,7 +6,7 @@ interface ManageDishes{
 function Navdishesh({setIsShowDishes}:ManageDishes) {
   return (
     <>
-       <div className="flex  items-center gap-3  justify-between px-3 py-3  sticky top-14 h-15 bg-white ">
+       <div className="flex  items-center gap-3  justify-between px-3 py-3   sticky top-14 h-15 bg-white ">
         <p className="text-lg text-gray-700  font-bold">Manage Dishes</p>
         <div className="flex items-center border-1 border-gray-400 rounded-md gap-2 text-lg py-1 px-2">
           <CiSearch  />

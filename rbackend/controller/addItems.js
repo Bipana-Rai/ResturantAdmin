@@ -42,10 +42,10 @@ router.get("/getCategory", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-router.post("/addDish",upload.single("dishImage") ,async (req, res) => {
-  const { dishName, dishPrice,dishCategory } = req.body;
+router.post("/addDish", upload.single("dishImage"), async (req, res) => {
+  const { dishName, dishPrice, dishCategory, dishDiscription } = req.body;
   const dishImage = req.file ? req.file.filename : null;
-  console.log(req.body)
+  console.log(req.body);
   try {
     if (!dishName || !dishPrice) {
       return res.status(400).json("Field is missing");
@@ -54,22 +54,21 @@ router.post("/addDish",upload.single("dishImage") ,async (req, res) => {
       dishName,
       dishPrice,
       dishImage,
-      dishCategory
+      dishCategory,
+      dishDiscription,
     });
-    const saveData =await data.save();
+    const saveData = await data.save();
     return res.status(200).json({ saveData });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
-router.get("/getDish",async(req,res)=>{
- 
+router.get("/getDish", async (req, res) => {
   try {
-    const data= await dishSchema.find()
-    res.status(200).json({data})
-    
+    const data = await dishSchema.find();
+    res.status(200).json({ data });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-})
+});
 module.exports = router;
