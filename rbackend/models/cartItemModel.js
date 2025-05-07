@@ -4,9 +4,11 @@ const cartItem = new mongoose.Schema({
   dishPrice: Number,
   dishImage: String,
   dishCategory: String,
-  added:Boolean,
- 
-  
+  added: Boolean,
+  quantity:{
+    type:Number,
+    default:1
+  }
 });
 const cartItemSchema = mongoose.model("cartItem", cartItem);
 module.exports = cartItemSchema;
