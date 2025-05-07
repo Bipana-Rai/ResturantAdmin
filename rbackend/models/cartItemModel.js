@@ -4,6 +4,7 @@ const cartItem = new mongoose.Schema({
   dishPrice: Number,
   dishImage: String,
   dishCategory: String,
+  added:Boolean,
  
   
 });
