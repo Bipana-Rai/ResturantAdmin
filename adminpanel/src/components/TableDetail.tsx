@@ -7,14 +7,15 @@ interface TableDataProps {
 
 function TableDetail({ data }: TableDataProps) {
   return (
-    //  <li>{data.tableNum}</li>
     <>
       <TableRow>
         <TableCell>{data.tableNum}</TableCell>
         <TableCell>{data.tableCapacity}</TableCell>
         <TableCell>{data.tableLocation}</TableCell>
-        <StatusToggle />
-        <TableCell>{data.tableStatus}</TableCell>
+        <TableCell className="flex gap-5">
+          <StatusToggle />
+          {data.tableStatus}
+        </TableCell>
       </TableRow>
     </>
   );

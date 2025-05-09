@@ -22,6 +22,7 @@ function ManageTables() {
   console.log(tableDetail);
   return (
     <>
+    <div className="px-5">
       <div className="flex  justify-between px-3 py-4">
         <p className="text-3xl font-bold">Table Data</p>
         <button className="bg-cyan-700 rounded-md px-5 py-1 text-gray-200">
@@ -40,7 +41,7 @@ function ManageTables() {
             <TableHead>
               <p>Table Location</p>
             </TableHead>
-            <TableHead>
+            <TableHead className="ps-2">
               <p>Table Status</p>
             </TableHead>
           </TableRow>
@@ -51,6 +52,7 @@ function ManageTables() {
           ))}
         </TableBody>
       </Table>
+      </div>
     </>
   );
 }
