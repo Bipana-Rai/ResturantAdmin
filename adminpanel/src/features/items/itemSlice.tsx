@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 
+
 type AppAxiosError = AxiosError<{ message: string }>;
 export const addCategory = createAsyncThunk(
   "addCategory",
@@ -72,6 +73,29 @@ export const getDishes = createAsyncThunk(
     }
   }
 );
+export const addTable=createAsyncThunk("addTable",async(data:TableData,{rejectWithValue})=>{
+  try {
+    console.log(data)
+    const res=await axios.post("http://localhost:5000/api/addTable",data)
+    return res.data
+  } catch (error) {
+    const err = error as AppAxiosError;
+    return rejectWithValue(err.response?.data || err.message);
+  }
+})
+export const getTable = createAsyncThunk(
+  "getTable",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/getTable");
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
 interface Category {
   category: string;
   image?: string;
@@ -83,17 +107,26 @@ interface Dishes {
   dishCategory:string;
   dishDiscription:string
 }
+export interface TableData{
+  tableNum:string,
+  tableCapacity:number,
+  tableLocation?:string,
+  tableStatus:string,
+}
 interface CategoryState {
   loading: boolean;
   categoryDetail: Category[];
   dishesDetail: Dishes[];
+  tableDetail:TableData[];
   error: string | null;
 }
 const initialState: CategoryState = {
   loading: false,
   categoryDetail: [],
   dishesDetail: [],
+  tableDetail:[],
   error: null,
+
 };
 const itemSlice = createSlice({
   name: "item",
@@ -135,6 +168,29 @@ const itemSlice = createSlice({
         state.dishesDetail=(action.payload.data) as Dishes[];
       })
       .addCase(getDishes.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(addTable.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addTable.fulfilled, (state, action) => {
+        state.loading = false;
+        state.tableDetail.push(action.payload)
+      })
+      .addCase(addTable.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      }) .addCase(getTable.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getTable.fulfilled, (state, action) => {
+        state.loading = false;
+        state.tableDetail = action.payload as TableData[];
+      })
+      .addCase(getTable.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })

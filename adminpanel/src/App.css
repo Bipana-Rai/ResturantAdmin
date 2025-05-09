@@ -19,3 +19,14 @@
     opacity: 1;
   }
 }
+.toggle {
+  animation: toggle 0.5s linear;
+}
+@keyframes toggle{
+  fron{
+    left:0
+  }
+  to{
+    right:0
+  }
+}
