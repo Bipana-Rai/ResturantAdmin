@@ -13,13 +13,15 @@ interface TableDataProps {
   data: TableData;
   setShowEdit: (showEdit: boolean) => void;
   setId: (id: string) => void;
+  setChange:(change:string)=>void
 }
-function TableDetail({ data, setShowEdit, setId }: TableDataProps) {
+function TableDetail({ data, setShowEdit, setId,setChange }: TableDataProps) {
   const dispatch = useDispatch<AppDispatch>();
   const handleClick = () => {
     const updatedStatus =
       data.tableStatus === "available" ? "booked" : "available";
     dispatch(editTableData({ id: data._id, updatedStatus: updatedStatus }));
+    setChange(updatedStatus)
   };
   const handleEdit = () => {
     setShowEdit(true);

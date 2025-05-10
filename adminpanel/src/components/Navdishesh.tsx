@@ -1,9 +1,19 @@
 import { CiSearch } from "react-icons/ci";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { useParams } from "react-router-dom";
 interface ManageDishes{
   setIsShowDishes:(value:boolean)=>void
 }
 function Navdishesh({setIsShowDishes}:ManageDishes) {
+   const { category } = useParams();
+   console.log(category)
+   const handleClick=()=>{
+    if(!category){
+      return alert("please Choose a category")
+    }
+    setIsShowDishes(true)
+   }
+
   return (
     <>
        <div className="flex  items-center gap-3  justify-between px-3 py-3   sticky top-14 h-15 bg-white ">
@@ -13,7 +23,7 @@ function Navdishesh({setIsShowDishes}:ManageDishes) {
           <input type="text" placeholder="search dishes" className="text-sm pe-10 outline-0 " />
         </div>
 
-        <div className="flex bg-cyan-700 rounded-xl text-sm px-3 py-2 text-white  gap-2 items-center cursor-pointer" onClick={()=>setIsShowDishes(true)}>
+        <div className="flex bg-cyan-700 rounded-xl text-sm px-3 py-2 text-white  gap-2 items-center cursor-pointer" onClick={handleClick}>
           <IoMdAddCircleOutline />
           <p>Add New Dishes</p>
         </div>

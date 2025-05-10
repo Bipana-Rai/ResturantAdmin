@@ -16,6 +16,7 @@ import EditTableForm from "@/components/EditTableForm";
 
 function ManageTables() {
   const dispatch = useDispatch<AppDispatch>();
+  const[change,setChange]=useState("")
   
   const { tableDetail } = useSelector((state: RootState) => state.item);
   const [show, setShow] = useState(false);
@@ -23,7 +24,7 @@ function ManageTables() {
   const[id,setId]=useState("")
   useEffect(() => {
     dispatch(getTable());
-  }, [dispatch,showEdit]);
+  }, [dispatch,showEdit,change]);
  
 
   return (
@@ -59,7 +60,7 @@ function ManageTables() {
           </TableHeader>
           <TableBody>
             {tableDetail?.map((data, idx) => (
-              <TableDetail key={idx} data={data} setShowEdit={setShowEdit} setId={setId}  />
+              <TableDetail key={idx} data={data} setShowEdit={setShowEdit} setId={setId} setChange={setChange}  />
             ))}
           </TableBody>
         </Table>

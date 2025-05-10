@@ -25,7 +25,10 @@ function TableForm({ setShow }: tableProps) {
   return (
     <div className="fixed h-[100vh] w-[100vw] bg-[#000000b4]  flex items-center px-80 z-30">
       <div className="anime relative w-[450px] pb-4 rounded-md bg-white px-10">
-        <div className="absolute right-5 top-3 cursor-pointer" onClick={()=>setShow(false)}>
+        <div
+          className="absolute right-5 top-3 cursor-pointer"
+          onClick={() => setShow(false)}
+        >
           <ImCross />
         </div>
 
