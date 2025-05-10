@@ -1,12 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 
-
 type AppAxiosError = AxiosError<{ message: string }>;
 export const addCategory = createAsyncThunk(
   "addCategory",
   async (formData: FormData, { rejectWithValue }) => {
-   
     try {
       const response = await axios.post(
         "http://localhost:5000/api/addCategory",
@@ -42,7 +40,6 @@ export const getCategory = createAsyncThunk(
 export const addDishes = createAsyncThunk(
   "addDishes",
   async (data: FormData, { rejectWithValue }) => {
-   
     try {
       const response = await axios.post(
         "http://localhost:5000/api/addDish",
@@ -53,7 +50,7 @@ export const addDishes = createAsyncThunk(
           },
         }
       );
-      console.log(response.data)
+
       return response.data;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -73,22 +70,23 @@ export const getDishes = createAsyncThunk(
     }
   }
 );
-export const addTable=createAsyncThunk("addTable",async(data:TableData,{rejectWithValue})=>{
-  try {
-    console.log(data)
-    const res=await axios.post("http://localhost:5000/api/addTable",data)
-    return res.data
-  } catch (error) {
-    const err = error as AppAxiosError;
-    return rejectWithValue(err.response?.data || err.message);
+export const addTable = createAsyncThunk(
+  "addTable",
+  async (data: TableData, { rejectWithValue }) => {
+    try {
+      const res = await axios.post("http://localhost:5000/api/addTable", data);
+      return res.data;
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
   }
-})
+);
 export const getTable = createAsyncThunk(
   "getTable",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get("http://localhost:5000/api/getTable");
-      console.log(response.data)
       return response.data;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -96,6 +94,54 @@ export const getTable = createAsyncThunk(
     }
   }
 );
+export const editTableData = createAsyncThunk(
+  "editTableData",
+  async (
+    {
+      id,
+      data,
+      updatedStatus,
+    }: { id: string; data?: TableData; updatedStatus?: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      if (updatedStatus) {
+        const response = await axios.put(
+          `http://localhost:5000/api/updateStatus/${id}`,
+          { tableStatus: updatedStatus }
+        );
+        return { id, data: response.data };
+      }
+
+      const response = await axios.put(
+        `http://localhost:5000/api/editTable/${id}`,
+        data
+      );
+      console.log(response.data);
+      return { id, data: response.data };
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+export const deleteTableData = createAsyncThunk(
+  "deleteTTableData",
+  async (id: string, { rejectWithValue }) => {
+    console.log(id);
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/deleteTable/${id}`
+      );
+
+      return { id, data: response.data };
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
 interface Category {
   category: string;
   image?: string;
@@ -104,29 +150,29 @@ interface Dishes {
   dishName: string;
   dishPrice: number;
   dishImage?: string;
-  dishCategory:string;
-  dishDiscription:string
+  dishCategory: string;
+  dishDiscription: string;
 }
-export interface TableData{
-  tableNum:string,
-  tableCapacity:number,
-  tableLocation?:string,
-  tableStatus:string,
+export interface TableData {
+  _id: string;
+  tableNum: string;
+  tableCapacity: number;
+  tableLocation?: string;
+  tableStatus: string;
 }
 interface CategoryState {
   loading: boolean;
   categoryDetail: Category[];
   dishesDetail: Dishes[];
-  tableDetail:TableData[];
+  tableDetail: TableData[];
   error: string | null;
 }
 const initialState: CategoryState = {
   loading: false,
   categoryDetail: [],
   dishesDetail: [],
-  tableDetail:[],
+  tableDetail: [],
   error: null,
-
 };
 const itemSlice = createSlice({
   name: "item",
@@ -165,7 +211,7 @@ const itemSlice = createSlice({
       })
       .addCase(getDishes.fulfilled, (state, action) => {
         state.loading = false;
-        state.dishesDetail=(action.payload.data) as Dishes[];
+        state.dishesDetail = action.payload.data as Dishes[];
       })
       .addCase(getDishes.rejected, (state, action) => {
         state.loading = false;
@@ -177,12 +223,13 @@ const itemSlice = createSlice({
       })
       .addCase(addTable.fulfilled, (state, action) => {
         state.loading = false;
-        state.tableDetail.push(action.payload)
+        state.tableDetail.push(action.payload);
       })
       .addCase(addTable.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }) .addCase(getTable.pending, (state) => {
+      })
+      .addCase(getTable.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -194,6 +241,36 @@ const itemSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
+      .addCase(editTableData.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(editTableData.fulfilled, (state, action) => {
+        state.loading = false;
+        const { id, data } = action.payload;
+        state.tableDetail = state.tableDetail.map((e) =>
+          e._id === id ? { ...e, ...data } : e
+        );
+      })
+      .addCase(editTableData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(deleteTableData.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteTableData.fulfilled, (state, action) => {
+        state.loading = false;
+        const { id } = action.payload;
+        if (id) {
+          state.tableDetail = state.tableDetail.filter((e) => e._id !== id);
+        }
+      })
+      .addCase(deleteTableData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 export default itemSlice.reducer;
