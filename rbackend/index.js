@@ -3,8 +3,10 @@ const mongoose=require("mongoose")
 const addItems=require("./controller/addItems")
 const cartItem=require("./controller/cartItem")
 const tableItem=require("./controller/tableItem")
+const bookingItem=require("./controller/bookingItem")
 const cors = require("cors");
 const path=require("path")
+
 
 
 
@@ -23,6 +25,7 @@ app.use("/api",addItems)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));//app.use le chai as a middleware kaam garxa,yo line le chai hamile upload gareko file lae  access grna help garxa,so that upload vako file hami frontend ma use garna sakxam 
 app.use("/api",cartItem)
 app.use("/api",tableItem)
+app.use("/api",bookingItem)
 
 app.listen(5000,()=>{
     console.log("server connected")
