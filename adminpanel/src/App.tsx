@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import OrderLine from "./pages/OrderLine";
 import ManageTables from "./pages/ManageTables";
+import ManageBooking from "./pages/ManageBooking";
 function App() {
   return (
     <>
@@ -16,6 +17,7 @@ function App() {
           <Route path="/managedishes/all" element={<ManageDishes />} />
           <Route path="/managetable" element={<ManageTables />} />
           <Route path="/managedishes/:category" element={<ManageDishes />} />
+          <Route path="/managebooking" element={<ManageBooking />} />
         </Routes>
       </div>
     </>

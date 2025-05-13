@@ -13,15 +13,21 @@ const sidebarContent=[{
     icon:<BiSolidFoodMenu />,
      path:'/orderline'
 },
+
+{
+    tab:"Manage Dishes",
+    icon:<FaBowlFood />,
+     path:'/managedishes/all'
+},
 {
     tab:"Manage Table",
     icon:<FaChair />,
      path:'/managetable'
 },
 {
-    tab:"Manage Dishes",
+    tab:"Manage Booking",
     icon:<FaBowlFood />,
-     path:'/managedishes/all'
+     path:'/managebooking'
 },
 ]
 export default sidebarContent

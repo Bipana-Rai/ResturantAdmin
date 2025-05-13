@@ -18,7 +18,7 @@ function Sidebar() {
   return (
     <>
       <div className="w-[236px]  bg-gray-100 flex flex-col border-r-1 border-gray-300 justify-between h-full fixed top-14 left-0 z-10">
-        <div className=" pt-10 flex flex-col px-3 gap-6 ">
+        <div className=" pt-10 flex flex-col px-2 gap-6 ">
           {sidebarContent.map((e, i) => (
             <div
               key={i}
