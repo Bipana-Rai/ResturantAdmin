@@ -110,7 +110,7 @@ export const editTableData = createAsyncThunk(
           `http://localhost:5000/api/updateStatus/${id}`,
           { tableStatus: updatedStatus }
         );
-        return { id, data: response.data };
+        return { id, tableStatus: updatedStatus, data: response.data };
       }
 
       const response = await axios.put(
@@ -247,10 +247,15 @@ const itemSlice = createSlice({
       })
       .addCase(editTableData.fulfilled, (state, action) => {
         state.loading = false;
-        const { id, data } = action.payload;
-        state.tableDetail = state.tableDetail.map((e) =>
-          e._id === id ? { ...e, ...data } : e
-        );
+        const { id, tableStatus, data } = action.payload;
+        const table = state.tableDetail.find((e) => e._id === id);
+        if (table) {
+          if (tableStatus) {
+            table.tableStatus = tableStatus;
+          } else if (data) {
+            Object.assign(table, data); // Directly update with full data
+          }
+        }
       })
       .addCase(editTableData.rejected, (state, action) => {
         state.loading = false;

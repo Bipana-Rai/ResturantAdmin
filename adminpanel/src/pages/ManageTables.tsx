@@ -24,7 +24,7 @@ function ManageTables() {
   const[id,setId]=useState("")
   useEffect(() => {
     dispatch(getTable());
-  }, [dispatch,showEdit,change]);
+  }, [dispatch,showEdit,change,setShowEdit]);
  
 
   return (

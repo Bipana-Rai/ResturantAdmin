@@ -4,7 +4,7 @@ const bookingData = new mongoose.Schema({
   email: String,
   members: Number,
   phNo: String,
-  tableNumber: Number,
+  tableNumber:String,
   location: String,
   bookingDate: String,
   bookingTime: String,
