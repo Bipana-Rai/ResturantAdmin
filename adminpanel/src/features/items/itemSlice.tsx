@@ -182,6 +182,7 @@ export interface BookedData {
   phNo: string;
   tableNumber: string;
   createdAt: string;
+  status: string;
 }
 interface CategoryState {
   loading: boolean;
@@ -197,7 +198,7 @@ const initialState: CategoryState = {
   categoryDetail: [],
   dishesDetail: [],
   tableDetail: [],
-   bookingDetail: [],
+  bookingDetail: [],
   error: null,
 };
 const itemSlice = createSlice({
@@ -312,8 +313,7 @@ const itemSlice = createSlice({
       .addCase(getBookingDetail.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      })
-     
+      });
   },
 });
 export default itemSlice.reducer;

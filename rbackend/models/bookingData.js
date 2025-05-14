@@ -8,6 +8,7 @@ const bookingData = new mongoose.Schema({
   location: String,
   bookingDate: String,
   bookingTime: String,
+  status:String,
 },{
     timestamps:true
 });
