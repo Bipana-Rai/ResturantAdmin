@@ -2,6 +2,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import {
   deleteTableData,
   editTableData,
+ 
   TableData,
 } from "../features/items/itemSlice";
 import { RiEdit2Fill } from "react-icons/ri";
@@ -29,6 +30,8 @@ function TableDetail({ data, setShowEdit, setId,setChange }: TableDataProps) {
   };
   const handleDelete = () => {
     dispatch(deleteTableData(data._id));
+    
+    
   };
   return (
     <>

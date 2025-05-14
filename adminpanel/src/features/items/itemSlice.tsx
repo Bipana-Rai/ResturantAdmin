@@ -141,7 +141,18 @@ export const deleteTableData = createAsyncThunk(
     }
   }
 );
-
+export const getBookingDetail = createAsyncThunk(
+  "getBookingDetail",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/getBookingDetail");
+      return res.data;
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
 interface Category {
   category: string;
   image?: string;
@@ -160,18 +171,33 @@ export interface TableData {
   tableLocation?: string;
   tableStatus: string;
 }
+export interface BookedData {
+  _id: string;
+  bookingDate: string;
+  bookingTime: string;
+  email: string;
+  fullName: string;
+  location: string;
+  members: number;
+  phNo: string;
+  tableNumber: string;
+  createdAt: string;
+}
 interface CategoryState {
   loading: boolean;
   categoryDetail: Category[];
   dishesDetail: Dishes[];
   tableDetail: TableData[];
   error: string | null;
+  bookingDetail: BookedData[];
 }
+
 const initialState: CategoryState = {
   loading: false,
   categoryDetail: [],
   dishesDetail: [],
   tableDetail: [],
+   bookingDetail: [],
   error: null,
 };
 const itemSlice = createSlice({
@@ -275,7 +301,19 @@ const itemSlice = createSlice({
       .addCase(deleteTableData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      });
+      })
+      .addCase(getBookingDetail.pending, (state) => {
+        state.loading = false;
+      })
+      .addCase(getBookingDetail.fulfilled, (state, action) => {
+        state.loading = false;
+        state.bookingDetail = action.payload as BookedData[];
+      })
+      .addCase(getBookingDetail.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+     
   },
 });
 export default itemSlice.reducer;

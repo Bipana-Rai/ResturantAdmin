@@ -1,10 +1,12 @@
 import BookingBar from "@/components/BookingBar"
+import BookingTable from "@/components/BookingTable"
 
 function ManageBooking() {
   return (
     <>
-    <div className="">
     <BookingBar/>
+    <div className="px-5">
+    <BookingTable/>
     </div>
     </>
   )
