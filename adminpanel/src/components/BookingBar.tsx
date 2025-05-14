@@ -2,8 +2,9 @@ import { useState } from "react";
 
 interface ManageBookingProps {
   setBookingStatus: (bookingStatus: string) => void;
+ 
 }
-function BookingBar({ setBookingStatus }: ManageBookingProps) {
+function BookingBar({ setBookingStatus}: ManageBookingProps) {
   const statusData = [
     { status: "all", bg: "bg-gray-400" },
     { status: "booked", bg: "bg-cyan-600" },

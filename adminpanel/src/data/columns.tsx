@@ -11,7 +11,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const columns: ColumnDef<BookedData>[] = [
+const columns=(setId:(id:string)=>void,setShowEditBookingForm:(showEditBookingForm:boolean)=>void): ColumnDef<BookedData>[] => [
   {
     accessorKey: "tableNumber",
     header: "Table Number",
@@ -20,13 +20,48 @@ const columns: ColumnDef<BookedData>[] = [
   { accessorKey: "members", header: "Total members" },
   { accessorKey: "email", header: "Email" },
   { accessorKey: "phNo", header: "Phone Number" },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      const status = row.getValue<string>("status");
+
+      const getStatusColor = (status: string) => {
+        switch (status) {
+          case "booked":
+            return "bg-cyan-200 text-cyan-800 ";
+          case "cancelled":
+            return "bg-red-200 text-red-600";
+          case "completed":
+            return "bg-green-200 text-green-800";
+                 default:
+            return "bg-gray-200 text-gray-800";
+        
+        }
+        
+      };
+
+      return (
+        <span
+          className={`${status==="booked"?"px-6":"px-4"}  py-1 rounded-md font-medium ${getStatusColor(
+            status
+          )}`}
+        >
+          {status}
+        </span>
+      );
+    },
+  },
 
   {
     id: "actions",
     enableHiding: false,
-    cell: () => {
-      
-
+    cell: ({row}) => {
+      const handleEdit=()=>{
+        const id=row.original._id
+       setId(id)
+       setShowEditBookingForm(true)
+      }
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -39,7 +74,11 @@ const columns: ColumnDef<BookedData>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={()=>alert("hello")}>View customer</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => alert("hello")}>
+              View customer
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleEdit}>Edit Booking</DropdownMenuItem>
+            <DropdownMenuItem>Delete Booking</DropdownMenuItem>
             <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

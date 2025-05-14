@@ -35,9 +35,11 @@ import columns from "../data/columns";
 import { BookedData } from "@/features/items/itemSlice";
 interface ManageBookingProps {
   filterData: BookedData[];
+   setId:(id:string)=>void
+   setShowEditBookingForm:(showEditBookingForm:boolean)=>void
 }
 
-function BookingTable({ filterData }: ManageBookingProps) {
+function BookingTable({ filterData,setId ,setShowEditBookingForm  }: ManageBookingProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { bookingDetail } = useSelector((state: RootState) => state.item);
   React.useEffect(() => {
@@ -53,7 +55,7 @@ function BookingTable({ filterData }: ManageBookingProps) {
 
   const table = useReactTable({
     data: filterData ?? [],
-    columns,
+    columns :columns(setId,setShowEditBookingForm),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -71,6 +73,8 @@ function BookingTable({ filterData }: ManageBookingProps) {
   });
 
   return (
+    <>
+    
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
@@ -115,7 +119,7 @@ function BookingTable({ filterData }: ManageBookingProps) {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -136,7 +140,7 @@ function BookingTable({ filterData }: ManageBookingProps) {
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -183,6 +187,7 @@ function BookingTable({ filterData }: ManageBookingProps) {
         </div>
       </div>
     </div>
+    </>
   );
 }
 export default BookingTable;

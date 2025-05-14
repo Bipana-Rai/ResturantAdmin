@@ -153,6 +153,29 @@ export const getBookingDetail = createAsyncThunk(
     }
   }
 );
+export const editBookingDetail = createAsyncThunk(
+  "editBookingDetail",
+  async (
+    { id, data,status }: { id: string; data: BookedData ,status:string},
+    { rejectWithValue }
+  ) => {
+    console.log(id,data,status)
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/api/editBookingDetail/${id}`,
+        {
+          ...data,
+          status:status
+        }
+      );
+
+      return { id, data: res.data };
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
 interface Category {
   category: string;
   image?: string;
