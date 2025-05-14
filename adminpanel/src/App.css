@@ -7,7 +7,7 @@
   display: none; /* Chrome, Safari */
 }
 .anime {
-  animation: popup 0.5s linear;
+  animation: popup 0.3s linear;
 }
 @keyframes popup {
   from {

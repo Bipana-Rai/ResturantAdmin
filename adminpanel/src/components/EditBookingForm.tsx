@@ -36,11 +36,11 @@ function EditBookingForm({ setShowEditBookingForm, id }: TableCardProps) {
   }, [dispatch]);
   return (
     <div className="anime  w-[500px] rounded-xl pb-3 pt-2 bg-white px-5 shadow-[0_3px_10px_rgb(0,0,0,0.1)]">
-      <p className="text-2xl text-cyan-700 font-bold text-center">Booking</p>
+      <p className="text-2xl  font-bold text-center">Booking</p>
       <form action="" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col leading-1">
           <div>
-            <label className=" text-cyan-800 font-bold">Table : </label>
+            <label className=" font-bold">Table : </label>
             <input
               className=" outline-0"
               type="text "
@@ -145,7 +145,7 @@ function EditBookingForm({ setShowEditBookingForm, id }: TableCardProps) {
         
         <div className="flex justify-between pt-4 px-10">
           <button
-            className="px-8 text-sm bg-red-500 text-gray-200 py-2 rounded-md cursor-pointer"
+            className="px-8 text-sm bg-white border-1 text-black border-black  py-2 rounded-md cursor-pointer"
             onClick={() => setShowEditBookingForm(false)}
           >
             {" "}
@@ -153,7 +153,7 @@ function EditBookingForm({ setShowEditBookingForm, id }: TableCardProps) {
           </button>
           <button
             type="submit"
-            className="px-8 text-sm cursor-pointer bg-cyan-700 text-gray-200 py-2 rounded-md"
+            className="px-8 text-sm cursor-pointer bg-black text-gray-200 py-2 bg rounded-md"
           >
             {" "}
            Update

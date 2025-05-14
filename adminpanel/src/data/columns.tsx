@@ -10,8 +10,13 @@ import { BookedData } from "@/features/items/itemSlice";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Alert from "@/utils/Alert";
+import { useState } from "react";
 
-const columns=(setId:(id:string)=>void,setShowEditBookingForm:(showEditBookingForm:boolean)=>void): ColumnDef<BookedData>[] => [
+const columns = (
+  setId: (id: string) => void,
+  setShowEditBookingForm: (showEditBookingForm: boolean) => void
+): ColumnDef<BookedData>[] => [
   {
     accessorKey: "tableNumber",
     header: "Table Number",
@@ -34,18 +39,16 @@ const columns=(setId:(id:string)=>void,setShowEditBookingForm:(showEditBookingFo
             return "bg-red-200 text-red-600";
           case "completed":
             return "bg-green-200 text-green-800";
-                 default:
+          default:
             return "bg-gray-200 text-gray-800";
-        
         }
-        
       };
 
       return (
         <span
-          className={`${status==="booked"?"px-6":"px-4"}  py-1 rounded-md font-medium ${getStatusColor(
-            status
-          )}`}
+          className={`${
+            status === "booked" ? "px-6" : "px-4"
+          }  py-1 rounded-md font-medium ${getStatusColor(status)}`}
         >
           {status}
         </span>
@@ -56,32 +59,43 @@ const columns=(setId:(id:string)=>void,setShowEditBookingForm:(showEditBookingFo
   {
     id: "actions",
     enableHiding: false,
-    cell: ({row}) => {
-      const handleEdit=()=>{
-        const id=row.original._id
-       setId(id)
-       setShowEditBookingForm(true)
-      }
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+    cell: ({ row }) => {
+      const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+      const handleEdit = () => {
+        const id = row.original._id;
+        setId(id);
+        setShowEditBookingForm(true);
+      };
 
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => alert("hello")}>
-              View customer
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleEdit}>Edit Booking</DropdownMenuItem>
-            <DropdownMenuItem>Delete Booking</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+      return (
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => alert("hello")}>
+                View customer
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleEdit}>
+                Edit Booking
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setShowDeleteAlert(true)}>
+                Delete Booking
+              </DropdownMenuItem>
+              <DropdownMenuItem>View payment details</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          {showDeleteAlert && (
+            <Alert onClose={() => setShowDeleteAlert(false)} />
+          )}
+        </>
       );
     },
   },
