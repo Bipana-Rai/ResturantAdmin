@@ -176,6 +176,20 @@ export const editBookingDetail = createAsyncThunk(
     }
   }
 );
+export const deleteBooking = createAsyncThunk(
+  "deleteBooking",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:5000/api/deleteBooking/${id}`
+      );
+      return {id,data:res.data};
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
 interface Category {
   category: string;
   image?: string;

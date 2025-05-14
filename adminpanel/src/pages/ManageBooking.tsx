@@ -36,6 +36,7 @@ function ManageBooking() {
       <BookingBar setBookingStatus={setBookingStatus} />
       <div className="px-5">
         <BookingTable
+        id={id}
           setId={setId}
           filterData={filterBookingDetail}
           setShowEditBookingForm={setShowEditBookingForm}

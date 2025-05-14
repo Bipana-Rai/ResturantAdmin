@@ -11,11 +11,17 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Alert from "@/utils/Alert";
-import { useState } from "react";
+type ActionState = {
+  type: "edit" | "delete" | null;
+  id: string | null;
+};
 
 const columns = (
+  id: string,
   setId: (id: string) => void,
-  setShowEditBookingForm: (showEditBookingForm: boolean) => void
+  setShowEditBookingForm: (showEditBookingForm: boolean) => void,
+  action: ActionState,
+  setAction:(action: ActionState)=>void
 ): ColumnDef<BookedData>[] => [
   {
     accessorKey: "tableNumber",
@@ -60,11 +66,15 @@ const columns = (
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+      const id = row.original._id;
       const handleEdit = () => {
-        const id = row.original._id;
+        setAction({ type: "edit", id });
+          setShowEditBookingForm(true);
+      };
+      const handleDelete = () => {
         setId(id);
-        setShowEditBookingForm(true);
+        setAction({ type: "delete", id });
+       
       };
 
       return (
@@ -86,14 +96,14 @@ const columns = (
               <DropdownMenuItem onClick={handleEdit}>
                 Edit Booking
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setShowDeleteAlert(true)}>
+              <DropdownMenuItem onClick={handleDelete}>
                 Delete Booking
               </DropdownMenuItem>
               <DropdownMenuItem>View payment details</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          {showDeleteAlert && (
-            <Alert onClose={() => setShowDeleteAlert(false)} />
+           {action.type === "delete" && action.id === id && (
+            <Alert id={id} onClose={() => setAction({ type: null, id: null })} />
           )}
         </>
       );

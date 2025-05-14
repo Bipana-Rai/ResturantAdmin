@@ -8,12 +8,21 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { deleteBooking } from "@/features/items/itemSlice";
+import { AppDispatch } from "@/store/store";
+import { useDispatch } from "react-redux";
 
 interface AlertProps {
   onClose: () => void;
+  id: string;
 }
 
-function Alert({ onClose }: AlertProps) {
+function Alert({ onClose, id }: AlertProps) {
+  const dispatch = useDispatch<AppDispatch>();
+  const handleClick = () => {
+    dispatch(deleteBooking(id));
+  };
+
   return (
     <AlertDialog open={true} onOpenChange={onClose}>
       <AlertDialogContent>
@@ -26,7 +35,7 @@ function Alert({ onClose }: AlertProps) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={handleClick}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

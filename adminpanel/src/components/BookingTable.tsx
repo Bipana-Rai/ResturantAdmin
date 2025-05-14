@@ -36,12 +36,14 @@ import { BookedData } from "@/features/items/itemSlice";
 interface ManageBookingProps {
   filterData: BookedData[];
    setId:(id:string)=>void
+   id:string
    setShowEditBookingForm:(showEditBookingForm:boolean)=>void
 }
 
-function BookingTable({ filterData,setId ,setShowEditBookingForm  }: ManageBookingProps) {
+function BookingTable({ id,filterData,setId ,setShowEditBookingForm  }: ManageBookingProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { bookingDetail } = useSelector((state: RootState) => state.item);
+  const[action,setAction]=React.useState([])
   React.useEffect(() => {
     dispatch(getBookingDetail());
   }, [dispatch, bookingDetail.length]);
@@ -52,10 +54,11 @@ function BookingTable({ filterData,setId ,setShowEditBookingForm  }: ManageBooki
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [showDeleteAlert, setShowDeleteAlert] = React.useState(false);
 
   const table = useReactTable({
     data: filterData ?? [],
-    columns :columns(setId,setShowEditBookingForm),
+    columns :columns(id,setId,setShowEditBookingForm,action,setAction),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
