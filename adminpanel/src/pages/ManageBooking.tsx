@@ -26,7 +26,7 @@ function ManageBooking() {
     <>
       <BookingBar setBookingStatus={setBookingStatus} />
       <div className="px-5">
-        <BookingTable />
+        <BookingTable filterData={filterBookingDetail} />
       </div>
     </>
   );

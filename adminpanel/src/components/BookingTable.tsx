@@ -10,14 +10,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ChevronDown} from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -29,14 +28,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {  getBookingDetail } from "@/features/items/itemSlice";
+import { getBookingDetail } from "@/features/items/itemSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
-import columns from "../data/columns"
+import columns from "../data/columns";
+import { BookedData } from "@/features/items/itemSlice";
+interface ManageBookingProps {
+  filterData: BookedData[];
+}
 
-
-
-function BookingTable() {
+function BookingTable({ filterData }: ManageBookingProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { bookingDetail } = useSelector((state: RootState) => state.item);
   React.useEffect(() => {
@@ -51,7 +52,7 @@ function BookingTable() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
-    data: bookingDetail || [],
+    data: filterData ?? [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
