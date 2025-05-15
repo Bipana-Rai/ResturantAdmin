@@ -101,7 +101,7 @@ export const editTableData = createAsyncThunk(
       id,
       data,
       updatedStatus,
-    }: { id: string; data?: TableData; updatedStatus?: string },
+    }: { id?: string; data?: TableData; updatedStatus?: string },
     { rejectWithValue }
   ) => {
    

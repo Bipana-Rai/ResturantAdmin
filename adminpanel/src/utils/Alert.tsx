@@ -8,11 +8,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import {
-  editTableData
-} from "@/features/items/itemSlice";
-import { AppDispatch } from "@/store/store";
-import { useDispatch } from "react-redux";
+import { deleteBooking, editTableData } from "@/features/items/itemSlice";
+import { AppDispatch, RootState } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
 
 interface AlertProps {
   onClose: () => void;
@@ -21,16 +19,18 @@ interface AlertProps {
 
 function Alert({ onClose, id }: AlertProps) {
   const dispatch = useDispatch<AppDispatch>();
-
+  const { tableDetail, bookingDetail } = useSelector(
+    (state: RootState) => state.item
+  );
+  const data = bookingDetail?.find((e) => e._id === id);
+  const filterData = tableDetail?.find((e) => e.tableNum === data?.tableNumber);
 
   const handleClick = () => {
-    //  dispatch(deleteBooking(id));
-       
     dispatch(
-      editTableData({ id, updatedStatus: "available" })
+      editTableData({ id: filterData?._id, updatedStatus: "available" })
     );
+    dispatch(deleteBooking(id));
   };
-
 
   return (
     <AlertDialog open={true} onOpenChange={onClose}>

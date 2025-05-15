@@ -20,7 +20,8 @@ router.get("/getBookingDetail", async (req, res) => {
   }
 });
 router.put("/editBookingDetail/:id", async (req, res) => {
-  const {id}=req.params
+
+   const { id } = req.params;
   const data = req.body;
 
   try {

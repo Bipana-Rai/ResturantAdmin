@@ -23,8 +23,11 @@ router.get("/getTable", async (req, res) => {
 router.put("/updateStatus/:id", async (req, res) => {
   const { id } = req.params;
   const data = req.body;
+    
+ 
   try {
     const updateData = await tableInfoSchma.findByIdAndUpdate(id, data);
+ 
     res.status(200).json(updateData);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -34,7 +37,7 @@ router.put("/updateStatus/:id", async (req, res) => {
 router.put("/editTable/:id", async (req, res) => {
   const { id } = req.params;
   const data = req.body;
-  console.log(data);
+
   try {
     const updateData = await tableInfoSchma.findByIdAndUpdate(id, data);
     res.status(200).json(updateData);
