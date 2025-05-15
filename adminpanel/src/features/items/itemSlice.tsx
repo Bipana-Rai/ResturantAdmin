@@ -104,11 +104,13 @@ export const editTableData = createAsyncThunk(
     }: { id: string; data?: TableData; updatedStatus?: string },
     { rejectWithValue }
   ) => {
+   
     try {
       if (updatedStatus) {
+        console.log(updatedStatus)
         const response = await axios.put(
           `http://localhost:5000/api/updateStatus/${id}`,
-          { tableStatus: updatedStatus }
+          {  ...(updatedStatus && { tableStatus: updatedStatus })}
         );
         return { id, tableStatus: updatedStatus, data: response.data };
       }
@@ -156,16 +158,16 @@ export const getBookingDetail = createAsyncThunk(
 export const editBookingDetail = createAsyncThunk(
   "editBookingDetail",
   async (
-    { id, data,status }: { id: string; data: BookedData ,status:string},
+    { id, data, status }: { id?: string; data: BookedData; status: string },
     { rejectWithValue }
   ) => {
-    console.log(id,data,status)
+    console.log(id, data, status);
     try {
       const res = await axios.put(
         `http://localhost:5000/api/editBookingDetail/${id}`,
         {
           ...data,
-          status:status
+          status: status,
         }
       );
 
@@ -183,7 +185,7 @@ export const deleteBooking = createAsyncThunk(
       const res = await axios.delete(
         `http://localhost:5000/api/deleteBooking/${id}`
       );
-      return {id,data:res.data};
+      return { id, data: res.data };
     } catch (error) {
       const err = error as AppAxiosError;
       return rejectWithValue(err.response?.data || err.message);
@@ -348,6 +350,18 @@ const itemSlice = createSlice({
         state.bookingDetail = action.payload as BookedData[];
       })
       .addCase(getBookingDetail.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(deleteBooking.pending, (state) => {
+        state.loading = false;
+      })
+      .addCase(deleteBooking.fulfilled, (state, action) => {
+        state.loading = false;
+        const { id } = action.payload;
+        state.bookingDetail = state.bookingDetail.filter((e) => e._id !== id);
+      })
+      .addCase(deleteBooking.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

@@ -4,14 +4,15 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { BookedData, editBookingDetail, getBookingDetail } from "@/features/items/itemSlice";
+import { ActionState } from "@/pages/ManageBooking";
 
 interface TableCardProps {
   setShowEditBookingForm: (showEditBookingForm: boolean) => void;
-  id: string;
+ action:ActionState
 }
-function EditBookingForm({ setShowEditBookingForm, id }: TableCardProps) {
+function EditBookingForm({ setShowEditBookingForm, action }: TableCardProps) {
   const { bookingDetail } = useSelector((state: RootState) => state.item);
-  const filterData = bookingDetail.find((e) => e._id === id);
+  const filterData = bookingDetail.find((e) => e._id === action?.id);
   console.log(filterData);
   const dispatch = useDispatch<AppDispatch>();
   const {
@@ -26,6 +27,7 @@ function EditBookingForm({ setShowEditBookingForm, id }: TableCardProps) {
 
   const onSubmit = (data: BookedData) => {
     const transformedData = { ...data };
+    const id=action?.id
     console.log(transformedData)
     dispatch(editBookingDetail({id,data:transformedData,status:transformedData.status}))
     setShowEditBookingForm(false);

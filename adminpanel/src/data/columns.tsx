@@ -13,12 +13,10 @@ import { Button } from "@/components/ui/button";
 import Alert from "@/utils/Alert";
 type ActionState = {
   type: "edit" | "delete" | null;
-  id: string | null;
+  id: string | undefined;
 };
 
 const columns = (
-  id: string,
-  setId: (id: string) => void,
   setShowEditBookingForm: (showEditBookingForm: boolean) => void,
   action: ActionState,
   setAction:(action: ActionState)=>void
@@ -72,9 +70,7 @@ const columns = (
           setShowEditBookingForm(true);
       };
       const handleDelete = () => {
-        setId(id);
         setAction({ type: "delete", id });
-       
       };
 
       return (
@@ -103,7 +99,7 @@ const columns = (
             </DropdownMenuContent>
           </DropdownMenu>
            {action.type === "delete" && action.id === id && (
-            <Alert id={id} onClose={() => setAction({ type: null, id: null })} />
+            <Alert id={id} onClose={() => setAction({ type: null, id: undefined })} />
           )}
         </>
       );

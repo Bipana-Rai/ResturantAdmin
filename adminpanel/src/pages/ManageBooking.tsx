@@ -5,11 +5,14 @@ import { getBookingDetail } from "@/features/items/itemSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+export type ActionState = {
+  type: "edit" | "delete" | null;
+  id: string | undefined;
+};
 function ManageBooking() {
   const dispatch = useDispatch<AppDispatch>();
   const [showEditBookingForm, setShowEditBookingForm] = useState(false);
-  const [id, setId] = useState("");
+  const [action, setAction] = useState<ActionState>({ type: null, id: undefined });
   const [bookingStatus, setBookingStatus] = useState("all");
   const { bookingDetail } = useSelector((state: RootState) => state.item);
 
@@ -20,14 +23,14 @@ function ManageBooking() {
 
   useEffect(() => {
     dispatch(getBookingDetail());
-  }, [dispatch,showEditBookingForm,setShowEditBookingForm]);
+  }, [dispatch, showEditBookingForm, setShowEditBookingForm]);
 
   return (
     <>
       {showEditBookingForm && (
         <div className="h-[100vh] top-0 left-0 bg-[#0000005d] w-[100vw] fixed  z-20 flex items-center justify-center">
           <EditBookingForm
-            id={id}
+            action={action}
             setShowEditBookingForm={setShowEditBookingForm}
           />
         </div>
@@ -36,8 +39,8 @@ function ManageBooking() {
       <BookingBar setBookingStatus={setBookingStatus} />
       <div className="px-5">
         <BookingTable
-        id={id}
-          setId={setId}
+          action={action}
+          setAction={setAction}
           filterData={filterBookingDetail}
           setShowEditBookingForm={setShowEditBookingForm}
         />

@@ -8,7 +8,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { deleteBooking } from "@/features/items/itemSlice";
+import {
+  editTableData
+} from "@/features/items/itemSlice";
 import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
 
@@ -19,9 +21,16 @@ interface AlertProps {
 
 function Alert({ onClose, id }: AlertProps) {
   const dispatch = useDispatch<AppDispatch>();
+
+
   const handleClick = () => {
-    dispatch(deleteBooking(id));
+    //  dispatch(deleteBooking(id));
+       
+    dispatch(
+      editTableData({ id, updatedStatus: "available" })
+    );
   };
+
 
   return (
     <AlertDialog open={true} onOpenChange={onClose}>
