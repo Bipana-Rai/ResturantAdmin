@@ -1,14 +1,15 @@
 import { TableCell, TableRow } from "@/components/ui/table";
-import {
-  deleteTableData,
-  editTableData,
- 
-  TableData,
-} from "../features/items/itemSlice";
-import { RiEdit2Fill } from "react-icons/ri";
-import { MdDelete } from "react-icons/md";
-import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
+import Alert from "@/utils/Alert";
+import { useState } from "react";
+import { MdDelete } from "react-icons/md";
+import { RiEdit2Fill } from "react-icons/ri";
+import { useDispatch } from "react-redux";
+import {
+  editTableData,
+
+  TableData
+} from "../features/items/itemSlice";
 
 interface TableDataProps {
   data: TableData;
@@ -18,23 +19,25 @@ interface TableDataProps {
 }
 function TableDetail({ data, setShowEdit, setId,setChange }: TableDataProps) {
   const dispatch = useDispatch<AppDispatch>();
+  const [showDelete,setShowDelete]=useState(false)
   const handleClick = () => {
     const updatedStatus =
       data.tableStatus === "available" ? "booked" : "available";
+      setChange(updatedStatus)
     dispatch(editTableData({ id: data._id, updatedStatus: updatedStatus }));
-    setChange(updatedStatus)
+    
   };
   const handleEdit = () => {
     setShowEdit(true);
     setId(data._id);
   };
   const handleDelete = () => {
-    dispatch(deleteTableData(data._id));
-    
-    
+   setShowDelete(true) 
   };
   return (
     <>
+    {showDelete && <Alert type="table" id={data._id}onClose={() => setShowDelete(false)}/>}
+    
       <TableRow>
         <TableCell>{data.tableNum}</TableCell>
         <TableCell>{data.tableCapacity}</TableCell>

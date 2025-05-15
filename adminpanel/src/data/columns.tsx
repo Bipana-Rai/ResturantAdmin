@@ -99,7 +99,7 @@ const columns = (
             </DropdownMenuContent>
           </DropdownMenu>
            {action.type === "delete" && action.id === id && (
-            <Alert id={id} onClose={() => setAction({ type: null, id: undefined })} />
+            <Alert id={id} type="booking" onClose={() => setAction({ type: null, id: undefined })} />
           )}
         </>
       );
