@@ -14,7 +14,6 @@ router.post("/addTable", async (req, res) => {
 router.get("/getTable", async (req, res) => {
   try {
     const data = await tableInfoSchma.find();
-    console.log(data);
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -47,7 +46,6 @@ router.put("/editTable/:id", async (req, res) => {
 });
 router.delete("/deleteTable/:id", async (req, res) => {
   const { id } = req.params;
-  console.log(id)
 
   try {
     const deleteData = await tableInfoSchma.findByIdAndDelete(id);
