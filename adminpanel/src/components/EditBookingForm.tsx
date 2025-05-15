@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
-import { BookedData, editBookingDetail, getBookingDetail } from "@/features/items/itemSlice";
+import { BookedData, editBookingDetail, editTableData, getBookingDetail, getTable } from "@/features/items/itemSlice";
 import { ActionState } from "@/pages/ManageBooking";
 
 interface TableCardProps {
@@ -11,8 +11,9 @@ interface TableCardProps {
  action:ActionState
 }
 function EditBookingForm({ setShowEditBookingForm, action }: TableCardProps) {
-  const { bookingDetail } = useSelector((state: RootState) => state.item);
+  const { bookingDetail,tableDetail } = useSelector((state: RootState) => state.item);
   const filterData = bookingDetail.find((e) => e._id === action?.id);
+  const filterTable=tableDetail.find((e)=>e.tableNum===filterData?.tableNumber)
   console.log(filterData);
   const dispatch = useDispatch<AppDispatch>();
   const {
@@ -28,13 +29,18 @@ function EditBookingForm({ setShowEditBookingForm, action }: TableCardProps) {
   const onSubmit = (data: BookedData) => {
     const transformedData = { ...data };
     const id=action?.id
-    console.log(transformedData)
+    if(transformedData.status==="completed"){
+        dispatch(editTableData({ id: filterTable?._id, updatedStatus: "available" }))
+    }
+    console.log(transformedData.status)
     dispatch(editBookingDetail({id,data:transformedData,status:transformedData.status}))
+    
     setShowEditBookingForm(false);
 
   };
   useEffect(() => {
     dispatch(getBookingDetail());
+    dispatch(getTable())
   }, [dispatch]);
   return (
     <div className="anime  w-[500px] rounded-xl pb-3 pt-2 bg-white px-5 shadow-[0_3px_10px_rgb(0,0,0,0.1)]">

@@ -204,7 +204,7 @@ interface Dishes {
   dishDiscription: string;
 }
 export interface TableData {
-  _id: string;
+  _id?: string;
   tableNum: string;
   tableCapacity: number;
   tableLocation?: string;
