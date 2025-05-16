@@ -1,11 +1,22 @@
 import waitlist from "../data/waitlist";
-
 import menu from "../data/menu";
 import TableDetailCard from "../components/TableDetailCard";
 import Itemcard from "../components/Itemcard";
 import OrderInfoCard from "../components/OrderInfoCard";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
+import { useEffect, useState } from "react";
+import { getDineIn } from "@/features/items/itemSlice";
 
 function OrderLine() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { orderDetail } = useSelector((state: RootState) => state.item);
+    const [id,setId] =useState<string>("")
+    const filterOrder=orderDetail?.find((e)=>e._id===id)
+  useEffect(() => {
+    dispatch(getDineIn());
+  }, [dispatch]);
+  console.log("id",id);
   return (
     <>
       <div className="grid lg:grid-cols-6 relative  ">
@@ -19,8 +30,10 @@ function OrderLine() {
             ))}
           </div>
 
-          <div className="py-8">
-            <OrderInfoCard />
+          <div className="py-8 flex gap-2">
+            {orderDetail?.map((data) => (
+              <OrderInfoCard key={data._id}  data={data} setId={setId}/>
+            ))}
           </div>
           <div className="border-b-1 pb-5 border-dashed border-gray-300">
             <p className="text-xl font-bold pb-4 ">Foodies Menu</p>
@@ -40,14 +53,14 @@ function OrderLine() {
           </div>
           <div className="py-4 flex justify-around gap-3 flex-wrap">
             {[...Array(15)].map(() => (
-              <Itemcard/>
+              <Itemcard />
             ))}
           </div>
         </div>
         {/* next col */}
         <div className="lg:col-span-2    bg-gray-300 mt-[-7px]    ">
           <div className=" sticky top-15 border-0 h-[89vh] px-3">
-            <TableDetailCard/>
+            <TableDetailCard data={filterOrder} />
           </div>
         </div>
       </div>

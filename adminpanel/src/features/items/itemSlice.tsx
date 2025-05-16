@@ -225,6 +225,7 @@ export interface cartItems {
   quantity: number;
 }
 export interface orderData{
+  _id?:string
     tableNumber:string,
     cartItems:cartItems[],
     totalAmount:number

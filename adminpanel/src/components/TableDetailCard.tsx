@@ -5,65 +5,56 @@ import { FaRegIdCard } from "react-icons/fa6";
 import { LuScanLine } from "react-icons/lu";
 import { CiDesktopMouse2 } from "react-icons/ci";
 import { FiPrinter } from "react-icons/fi";
-function TableDetailCard() {
+import { orderData } from "@/features/items/itemSlice";
+interface OrderLineProps {
+  data?: orderData;
+}
+function TableDetailCard({ data }: OrderLineProps) {
   return (
     <>
       <div className="bg-white flex flex-col justify-between rounded-md h-[60vh] ">
         <div>
-        <div className="flex justify-between p-2 border-b-1 border-gray-300 border-dashed">
-          <p>Table No #04</p>
-          <div className="flex gap-3 text-xl ">
-            <CiEdit />
-            <MdDeleteOutline />
+          <div className="flex justify-between p-2 border-b-1 border-gray-300 border-dashed">
+            <p>Table No #{data?.tableNumber}</p>
+            <div className="flex gap-3 text-xl ">
+              <CiEdit />
+              <MdDeleteOutline />
+            </div>
+          </div>
+          <div className="flex flex-col justify-between px-3 border-b-1 border-gray-400 border-dashed ">
+            <div className="flex items-center justify-between py-2">
+              <p className="font-semibold text-gray-900 text-lg">
+                Ordered Items
+              </p>
+              <p className="text-gray-400">{data?.cartItems?.length}</p>
+            </div>
+            {data?.cartItems?.map((e) => (
+              <div className="flex max-h-[200px] overflow-y-auto justify-between px-3  ">
+                <p className="text-gray-600">{e.quantity}x {e.dishName}</p>
+                <p className="font-semibold text-gray-900">${e.dishPrice}</p>
+              </div>
+            ))}
+          </div>
+          <div className="py-2 px-3 flex flex-col justify-between">
+            <p className="font-semibold text-gray-900 text-lg pb-2 ">
+              Payment Summery
+            </p>
+            <div className="flex justify-between px-3 ">
+              <p className="text-gray-500">Subtotal</p>
+              <p className="font-semibold text-gray-900">$67.00</p>
+            </div>
+            <div className="flex justify-between px-3 ">
+              <p className="text-gray-500">Tax</p>
+              <p className="font-semibold text-gray-900">$67.00</p>
+            </div>
           </div>
         </div>
-        <div className="flex flex-col justify-between px-3 border-b-1 border-gray-400 border-dashed ">
-          <div className="flex items-center justify-between py-2">
-            <p className="font-semibold text-gray-900 text-lg">Ordered Items</p>
-            <p className="text-gray-400">05</p>
-          </div>
-          <div className="flex max-h-[200px] overflow-y-auto justify-between px-3  ">
-            <p className="text-gray-600">2x Pasta with Roast Beef</p>
-            <p className="font-semibold text-gray-900">$20.00</p>
-          </div>
-          <div className="flex justify-between px-3  ">
-            <p className="text-gray-600">2x Pasta with Roast Beef</p>
-            <p className="font-semibold text-gray-900">$20.00</p>
-          </div>
-          <div className="flex justify-between px-3  ">
-            <p className="text-gray-600">2x Pasta with Roast Beef</p>
-            <p className="font-semibold text-gray-900">$20.00</p>
-          </div>
-          <div className="flex justify-between px-3  ">
-            <p className="text-gray-600">2x Pasta with Roast Beef</p>
-            <p className="font-semibold text-gray-900">$20.00</p>
-          </div>
+        <div className="flex justify-between border-dashed border-gray-400 pb-6 pt-2 px-4 border-t-1">
+          <p className="font-semibold text-gray-900">Total Payable</p>
+          <p className="font-semibold text-gray-900">$67.00</p>
         </div>
-        <div className="py-2 px-3 flex flex-col justify-between">
-          <p className="font-semibold text-gray-900 text-lg pb-2 ">
-            Payment Summery
-          </p>
-          <div className="flex justify-between px-3 ">
-            <p className="text-gray-500">Subtotal</p>
-            <p className="font-semibold text-gray-900">$67.00</p>
-          </div>
-          <div className="flex justify-between px-3 ">
-            <p className="text-gray-500">Tax</p>
-            <p className="font-semibold text-gray-900">$67.00</p>
-          </div>
-          <div className="flex justify-between px-3 pb-3 ">
-            <p className="text-gray-500">Donation</p>
-            <p className="font-semibold text-gray-900">$67.00</p>
-          </div>
-          </div>
-          </div>
-          <div className="flex justify-between border-dashed border-gray-400 pb-6 pt-2 px-4 border-t-1">
-            <p className="font-semibold text-gray-900">Total Payable</p>
-            <p className="font-semibold text-gray-900">$67.00</p>
-          </div>
-       
       </div>
-     
+
       <div className="bg-white mt-1 h-[27vh] flex flex-col justify-between py-2 rounded-md px-3">
         <div>
           <p className="text-lg font-semibold py-2">Payment Method</p>

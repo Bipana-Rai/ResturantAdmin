@@ -12,10 +12,10 @@ router.post("/addDineIn", async (req, res) => {
     res.status(500), { message: error.message };
   }
 });
-router.post("/getDineIn", async (req, res) => {
+router.get("/getDineIn", async (req, res) => {
   try {
-    const dineOeder = await DineInModel.find();
-    res.status(200).json(dineOeder);
+    const dineOrder = await DineInModel.find();
+    res.status(200).json(dineOrder);
   } catch (error) {
     res.status(500), { message: error.message };
   }
