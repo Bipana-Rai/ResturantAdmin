@@ -192,6 +192,18 @@ export const deleteBooking = createAsyncThunk(
     }
   }
 );
+export const getDineIn = createAsyncThunk(
+  "getDineIn",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/getDineIn");
+      return res.data;
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
 interface Category {
   category: string;
   image?: string;
@@ -202,6 +214,20 @@ interface Dishes {
   dishImage?: string;
   dishCategory: string;
   dishDiscription: string;
+}
+export interface cartItems {
+  _id: string;
+  dishName: string;
+  dishCategory: string;
+  dishPrice: number;
+  dishImage?: string;
+  added: boolean;
+  quantity: number;
+}
+export interface orderData{
+    tableNumber:string,
+    cartItems:cartItems[],
+    totalAmount:number
 }
 export interface TableData {
   _id: string;
@@ -228,6 +254,7 @@ interface CategoryState {
   categoryDetail: Category[];
   dishesDetail: Dishes[];
   tableDetail: TableData[];
+  orderDetail:orderData[]
   error: string | null;
   bookingDetail: BookedData[];
 }
@@ -238,6 +265,7 @@ const initialState: CategoryState = {
   dishesDetail: [],
   tableDetail: [],
   bookingDetail: [],
+  orderDetail:[],
   error: null,
 };
 const itemSlice = createSlice({
@@ -364,7 +392,19 @@ const itemSlice = createSlice({
       .addCase(deleteBooking.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      });
+      })
+       .addCase(getDineIn.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getDineIn.fulfilled, (state, action) => {
+        state.loading = false;
+        state.orderDetail= action.payload as orderData[];
+      })
+      .addCase(getDineIn.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
   },
 });
 export default itemSlice.reducer;
