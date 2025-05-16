@@ -16,5 +16,8 @@ const dineIn = new mongoose.Schema({
       required: true,
       min: 0,
     },
-  timestamps: true,
-});
+
+},{  timestamps: true,});
+const DineInModel = mongoose.model("DineIn", dineIn);
+
+module.exports = DineInModel;

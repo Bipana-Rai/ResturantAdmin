@@ -4,6 +4,7 @@ const addItems=require("./controller/addItems")
 const cartItem=require("./controller/cartItem")
 const tableItem=require("./controller/tableItem")
 const bookingItem=require("./controller/bookingItem")
+const orderItems=require("./controller/orderItems")
 const cors = require("cors");
 const path=require("path")
 
@@ -26,6 +27,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));//app.use l
 app.use("/api",cartItem)
 app.use("/api",tableItem)
 app.use("/api",bookingItem)
+app.use("/api",orderItems)
 
 app.listen(5000,()=>{
     console.log("server connected")
