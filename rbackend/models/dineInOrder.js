@@ -16,6 +16,10 @@ const dineIn = new mongoose.Schema({
       required: true,
       min: 0,
     },
+    status:{
+      type:String,
+      require:true
+    }
 
 },{  timestamps: true,});
 const DineInModel = mongoose.model("DineIn", dineIn);

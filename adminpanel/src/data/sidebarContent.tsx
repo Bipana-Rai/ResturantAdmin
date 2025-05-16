@@ -6,7 +6,7 @@ const sidebarContent=[{
    
     tab:"Dashboard",
     icon:<MdOutlineDashboard />,
-    path:'/dashboard'
+    path:'/'
 },
 {
     tab:"Order Line",

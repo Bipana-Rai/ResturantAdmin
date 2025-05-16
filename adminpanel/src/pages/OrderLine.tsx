@@ -1,68 +1,64 @@
-import waitlist from "../data/waitlist";
-import menu from "../data/menu";
-import TableDetailCard from "../components/TableDetailCard";
-import Itemcard from "../components/Itemcard";
-import OrderInfoCard from "../components/OrderInfoCard";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
-import { useEffect, useState } from "react";
 import { getDineIn } from "@/features/items/itemSlice";
+import { AppDispatch, RootState } from "@/store/store";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function OrderLine() {
   const dispatch = useDispatch<AppDispatch>();
   const { orderDetail } = useSelector((state: RootState) => state.item);
-    const [id,setId] =useState<string>("")
-    const filterOrder=orderDetail?.find((e)=>e._id===id)
   useEffect(() => {
     dispatch(getDineIn());
-  }, [dispatch]);
-  console.log("id",id);
+  });
   return (
     <>
-      <div className="grid lg:grid-cols-6 relative  ">
-        <div className="lg:col-span-4 rounded-xl pt-2 px-2 ">
-          <p className="font-bold text-xl pb-3">Order List</p>
-          <div className="flex justify-around">
-            {waitlist.map((e, i) => (
-              <button key={i} className="border-1  rounded-2xl px-4 py-1 ">
-                <p>{e.list}</p>
-              </button>
-            ))}
-          </div>
-
-          <div className="py-8 flex gap-2">
-            {orderDetail?.map((data) => (
-              <OrderInfoCard key={data._id}  data={data} setId={setId}/>
-            ))}
-          </div>
-          <div className="border-b-1 pb-5 border-dashed border-gray-300">
-            <p className="text-xl font-bold pb-4 ">Foodies Menu</p>
-            <div className="flex gap-4">
-              {menu.map((e, i) => (
-                <div className="flex w-40 border-1 px-2 rounded-xl gap-3 items-center border-gray-400 ">
-                  <div key={i} className=" h-full bg-gray-100  w-10   ">
-                    <img src={e.img} alt="" className="object-cover" />
-                  </div>
-                  <div className="">
-                    <p className="font-bold">{e.category}</p>
-                    <p className="text-sm text-gray-500">{e.items} items</p>
-                  </div>
+     
+    <div className="flex justify-between px-8 pt-5 border-b-1  items-center pb-2 border-gray-300 ">
+        <p className="text-xl font-semibold font-serif">Order Items</p>
+        <div className="flex  gap-5">
+       <button className="px-6 py-1 bg-gray-400 text-gray-100 rounded-md">All</button>
+       <button  className="px-6 py-1 rounded-md bg-cyan-400 text-gray-100">Dine In</button>
+       <button  className="px-6 py-1 rounded-md bg-green-400 text-green-100">Take Away</button>
+       </div>
+        
+    </div>
+      <div className="py-4 ps-7 flex gap-5 flex-wrap">
+        {orderDetail.map((data) => (
+          <div className="w-[340px] flex gap-2 flex-col justify-between shadow-[0_3px_10px_rgb(0,0,0,0.2)] py-3 bg-white px-4">
+            <div className="flex flex-col gap-2">
+                <div className="flex gap-5 justify-between items-center">
+              <p className="text-lg font-semibold font-serif">Table #{data.tableNumber}</p>
+              <p className="bg-cyan-200 px-4 rounded-md text-blue-500 text-sm">{data.status}</p>
+              </div>
+              <div className="flex justify-between border-b-1 border-dashed border-gray-500">
+                <p className="font-semibold">Dishes</p>
+                <p
+                  className="font-semibold 
+              text-right"
+                >
+                  Quantity
+                </p>
+              </div>
+              {data?.cartItems?.map((cart) => (
+                <div className="flex justify-between">
+                  <p>{cart.dishName}</p>
+                  <p className="text-right pe-7">{cart.quantity}</p>
                 </div>
               ))}
             </div>
+            <div className="flex gap-4 border-t-1 border-dashed border-gray-400 pt-4  py-2 items-center">
+              <label htmlFor="">Status</label>
+              <select
+                name=""
+                id=""
+                className=" border-1 border-gray-500 rounded-sm text-sm py-1 px-2"
+              >
+                <option value="">Waiting</option>
+                <option value="">In Kitchen</option>
+                <option value="">Served</option>
+              </select>
+            </div>
           </div>
-          <div className="py-4 flex justify-around gap-3 flex-wrap">
-            {[...Array(15)].map(() => (
-              <Itemcard />
-            ))}
-          </div>
-        </div>
-        {/* next col */}
-        <div className="lg:col-span-2    bg-gray-300 mt-[-7px]    ">
-          <div className=" sticky top-15 border-0 h-[89vh] px-3">
-            <TableDetailCard data={filterOrder} />
-          </div>
-        </div>
+        ))}
       </div>
     </>
   );
