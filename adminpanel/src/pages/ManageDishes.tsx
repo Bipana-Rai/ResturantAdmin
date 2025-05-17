@@ -8,7 +8,6 @@ import AddDishes from "../components/AddDishes";
 
 function ManageDishes() {
  
-  // console.log(category)
   const [isShowCategory, setIsShowCategory] = useState<boolean>(false);
   const [isShowDishes, setIsShowDishes] = useState<boolean>(false);
 

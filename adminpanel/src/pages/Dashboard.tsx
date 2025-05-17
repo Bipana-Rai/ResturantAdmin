@@ -16,7 +16,6 @@ function Dashboard() {
   useEffect(() => {
     dispatch(getDineIn());
   }, [dispatch]);
-  console.log("id",id);
   return (
     <>
       <div className="grid lg:grid-cols-6 relative">

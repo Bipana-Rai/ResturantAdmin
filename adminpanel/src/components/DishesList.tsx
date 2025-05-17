@@ -22,7 +22,6 @@ function DishesList({ setIsShowDishes }: ManageDishes) {
   const dispatch = useDispatch<AppDispatch>();
 
   const [finalDish, setFinalDish] = useState<Dishes[]>([]);
-  console.log(category);
   useEffect(() => {
     dispatch(getDishes());
   }, [dispatch]);
