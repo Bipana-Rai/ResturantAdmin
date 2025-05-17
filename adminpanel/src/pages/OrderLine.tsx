@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 function OrderLine() {
   const dispatch = useDispatch<AppDispatch>();
   const { orderDetail } = useSelector((state: RootState) => state.item);
+  const handleStatusChange=()=>{
+    
+  }
   useEffect(() => {
     dispatch(getDineIn());
   });
@@ -48,13 +51,13 @@ function OrderLine() {
             <div className="flex gap-4 border-t-1 border-dashed border-gray-400 pt-4  py-2 items-center">
               <label htmlFor="">Status</label>
               <select
-                name=""
-                id=""
+               onChange={(e)=>handleStatusChange(data._id,e.target.value)}
+               value={data.status}
                 className=" border-1 border-gray-500 rounded-sm text-sm py-1 px-2"
               >
-                <option value="">Waiting</option>
-                <option value="">In Kitchen</option>
-                <option value="">Served</option>
+                <option value="waiting">Waiting</option>
+                <option value="in kitchen">In Kitchen</option>
+                <option value="served">Served</option>
               </select>
             </div>
           </div>

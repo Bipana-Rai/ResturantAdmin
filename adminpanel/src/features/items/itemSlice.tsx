@@ -228,7 +228,8 @@ export interface orderData{
   _id?:string
     tableNumber:string,
     cartItems:cartItems[],
-    totalAmount:number
+    totalAmount:number,
+    status:string
 }
 export interface TableData {
   _id: string;
