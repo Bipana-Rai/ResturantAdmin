@@ -1,4 +1,4 @@
-import { getDineIn } from "@/features/items/itemSlice";
+import { getDineIn, updateDineInStatus } from "@/features/items/itemSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 function OrderLine() {
   const dispatch = useDispatch<AppDispatch>();
   const { orderDetail } = useSelector((state: RootState) => state.item);
-  const handleStatusChange=()=>{
-    
+  const handleStatusChange=(id?:string,status?:string)=>{
+    dispatch(updateDineInStatus({id,status:status}))
   }
   useEffect(() => {
     dispatch(getDineIn());
@@ -51,8 +51,9 @@ function OrderLine() {
             <div className="flex gap-4 border-t-1 border-dashed border-gray-400 pt-4  py-2 items-center">
               <label htmlFor="">Status</label>
               <select
+              value={data.foodStatus}
                onChange={(e)=>handleStatusChange(data._id,e.target.value)}
-               value={data.status}
+             
                 className=" border-1 border-gray-500 rounded-sm text-sm py-1 px-2"
               >
                 <option value="waiting">Waiting</option>

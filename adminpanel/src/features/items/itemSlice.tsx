@@ -207,7 +207,7 @@ export const getDineIn = createAsyncThunk(
 export const updateDineInStatus = createAsyncThunk(
   "updateDineInStatus ",
   async (
-    { id ,status }: { id?: string;  status: string },
+    { id ,status }: { id?: string;  status?: string },
     { rejectWithValue }
   ) => {
     console.log(id,  status);
@@ -253,6 +253,7 @@ export interface orderData{
     cartItems:cartItems[],
     totalAmount:number,
     status:string
+    foodStatus?:string
 }
 export interface TableData {
   _id: string;
