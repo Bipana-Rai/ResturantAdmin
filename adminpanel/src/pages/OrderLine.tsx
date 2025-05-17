@@ -14,6 +14,11 @@ function OrderLine() {
   const [filterData, setFilterData] = useState<orderData[]>(orderDetail);
   const handleStatusChange = (id?: string, status?: string) => {
     dispatch(updateDineInStatus({ id, status: status }));
+    setFilterData((prev) =>
+      prev.map((order) =>
+        order._id === id ? { ...order, foodStatus: status } : order
+      )
+    );
   };
   useEffect(() => {
     dispatch(getDineIn());
