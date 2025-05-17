@@ -7,12 +7,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { orderData } from "@/features/items/itemSlice";
 interface OrderLinePrpos {
   title: string;
+ setFilterData: (filterData: orderData[]) => void;
+ orderDetail:orderData[]
 }
-function Selector({ title }: OrderLinePrpos) {
+function Selector({ title,setFilterData,orderDetail}: OrderLinePrpos) {
+  const handleOnChange=(data:string)=>{
+  const filterData=orderDetail.filter((e)=>e.foodStatus===data)
+  setFilterData(filterData)
+
+  }
   return (
-    <Select>
+    <Select onValueChange={handleOnChange}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder={title} />
       </SelectTrigger>

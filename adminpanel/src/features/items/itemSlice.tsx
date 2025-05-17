@@ -104,13 +104,12 @@ export const editTableData = createAsyncThunk(
     }: { id?: string; data?: TableData; updatedStatus?: string },
     { rejectWithValue }
   ) => {
-   
     try {
       if (updatedStatus) {
-        console.log(updatedStatus)
+        console.log(updatedStatus);
         const response = await axios.put(
           `http://localhost:5000/api/updateStatus/${id}`,
-          {  ...(updatedStatus && { tableStatus: updatedStatus })}
+          { ...(updatedStatus && { tableStatus: updatedStatus }) }
         );
         return { id, tableStatus: updatedStatus, data: response.data };
       }
@@ -207,15 +206,14 @@ export const getDineIn = createAsyncThunk(
 export const updateDineInStatus = createAsyncThunk(
   "updateDineInStatus ",
   async (
-    { id ,status }: { id?: string;  status?: string },
+    { id, status }: { id?: string; status?: string },
     { rejectWithValue }
   ) => {
-    console.log(id,  status);
+    console.log(id, status);
     try {
       const res = await axios.put(
         `http://localhost:5000/api/updateDineInStatus/${id}`,
         {
-          
           foodStatus: status,
         }
       );
@@ -247,13 +245,13 @@ export interface cartItems {
   added: boolean;
   quantity: number;
 }
-export interface orderData{
-  _id?:string
-    tableNumber:string,
-    cartItems:cartItems[],
-    totalAmount:number,
-    status:string
-    foodStatus?:string
+export interface orderData {
+  _id?: string;
+  tableNumber: string;
+  cartItems: cartItems[];
+  totalAmount: number;
+  status: string;
+  foodStatus?: string;
 }
 export interface TableData {
   _id: string;
@@ -280,7 +278,7 @@ interface CategoryState {
   categoryDetail: Category[];
   dishesDetail: Dishes[];
   tableDetail: TableData[];
-  orderDetail:orderData[]
+  orderDetail: orderData[];
   error: string | null;
   bookingDetail: BookedData[];
 }
@@ -291,7 +289,7 @@ const initialState: CategoryState = {
   dishesDetail: [],
   tableDetail: [],
   bookingDetail: [],
-  orderDetail:[],
+  orderDetail: [],
   error: null,
 };
 const itemSlice = createSlice({
@@ -419,18 +417,18 @@ const itemSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-       .addCase(getDineIn.pending, (state) => {
+      .addCase(getDineIn.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(getDineIn.fulfilled, (state, action) => {
         state.loading = false;
-        state.orderDetail= action.payload as orderData[];
+        state.orderDetail = action.payload as orderData[];
       })
       .addCase(getDineIn.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      })
+      });
   },
 });
 export default itemSlice.reducer;
