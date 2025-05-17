@@ -42,4 +42,12 @@ router.delete("/deleteCartItem/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+router.delete("/deleteCartOrder", async (req, res) => {
+  try {
+    const deleteItem = await cartItemSchema.deleteMany({});
+    res.status(200).json(deleteItem);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 module.exports = router;

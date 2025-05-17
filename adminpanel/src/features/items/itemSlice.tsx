@@ -204,6 +204,29 @@ export const getDineIn = createAsyncThunk(
     }
   }
 );
+export const updateDineInStatus = createAsyncThunk(
+  "updateDineInStatus ",
+  async (
+    { id ,status }: { id?: string;  status: string },
+    { rejectWithValue }
+  ) => {
+    console.log(id,  status);
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/api/updateDineInStatus/${id}`,
+        {
+          
+          foodStatus: status,
+        }
+      );
+
+      return { id, data: res.data };
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
 interface Category {
   category: string;
   image?: string;
