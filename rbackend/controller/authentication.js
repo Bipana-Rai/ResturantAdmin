@@ -5,11 +5,11 @@ var jwt = require("jsonwebtoken");
 const secret=require("../config")
 const signupSchema = require("../models/signupModel");
 
-router.post("/addsignupData", async (req, res) => {
+router.post("/signupData", async (req, res) => {
   try {
-    const { email, password, fullName, lastName, phone } = req.body;
-    if (!email || !password || !fullName || !lastName || !phone) {
-      return res.status(400).json({ message: "Missing Foeld" });
+    const { email, password, firstName, lastName, phone } = req.body;
+    if (!email || !password || !firstName || !lastName || !phone) {
+      return res.status(400).json({ message: "Missing Field" });
     }
     const existingUser = await signupSchema.findOne({ email });
     if (existingUser) {
@@ -19,13 +19,13 @@ router.post("/addsignupData", async (req, res) => {
     const user = new signupSchema({
       email,
       password: hashPassword,
-      fullName,
+      firstName,
       lastName,
       phone,
     });
     const saveData = await user.save();
-    console.log(saveData);
-    res.status(201).json({ message: " Register Successfully" });
+ 
+    res.status(201).json({ message: " Register Successfully" ,user: saveData});
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

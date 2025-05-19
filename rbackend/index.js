@@ -12,6 +12,7 @@ const path=require("path")
 const app=express()
 app.use(express.json())
 app.use(cors())
+
 mongoose.connect("mongodb+srv://bipanarai:Bipana123@cluster0.rnhqnoe.mongodb.net/Resturant", {})
   .then(() => {
     console.log("Successfully connected to MongoDB");
