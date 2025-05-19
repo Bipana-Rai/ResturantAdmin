@@ -8,10 +8,13 @@ const orderItems=require("./controller/orderItems")
 const authentication=require("./controller/authentication")
 const cors = require("cors");
 const path=require("path")
+const cookieParser=require("cookie-parser")
 
 const app=express()
 app.use(express.json())
+app.use(cookieParser())
 app.use(cors())
+
 
 mongoose.connect("mongodb+srv://bipanarai:Bipana123@cluster0.rnhqnoe.mongodb.net/Resturant", {})
   .then(() => {
