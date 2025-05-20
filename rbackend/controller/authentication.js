@@ -33,7 +33,7 @@ router.post("/signupData", async (req, res) => {
   }
 });
 router.post("/loginData", async (req, res) => {
-  try { 
+  try {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -50,7 +50,7 @@ router.post("/loginData", async (req, res) => {
     if (!isPasswordValidate) {
       return res.status(400).json({ message: "Incorrect Password" });
     }
-    var token = jwt.sign({ doesExistUser }, secret, {
+    var token = jwt.sign({ ...doesExistUser.toObject() }, secret, {
       expiresIn: "1h", //kati time pxi expire hune
     });
     res.cookie("jwt", token, {
@@ -58,14 +58,21 @@ router.post("/loginData", async (req, res) => {
       maxAge: 60 * 60 * 1000, //yo veneko cookie chai 1 hour ma expire hunxa
       sameSite: "lax",
     });
-  
+
     res.status(201).json({ message: " Login Successfully", token });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 router.get("/verify", verifyJWT, (req, res) => {
-  console.log("Cookies in Verify Route:", req.cookies); 
-  res.status(200).json({ message: "user verified", user: req, user });
+  console.log("Cookies in Verify Route:", req.cookies);
+  res.status(200).json({ message: "user verified", user: req.user });
+});
+router.post("/logout", (req, res) => {
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    sameSite: "lax",
+  });
+  res.status(200).json({ message: "Logged out successfully" });
 });
 module.exports = router;

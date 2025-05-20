@@ -1,4 +1,3 @@
-
 const jwt=require("jsonwebtoken")
 const secret=require("../config")
 const varifyJWT=(req,res,next)=>{
