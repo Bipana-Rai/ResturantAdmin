@@ -4,17 +4,35 @@ const addItems = require("./controller/addItems");
 const cartItem = require("./controller/cartItem");
 const tableItem = require("./controller/tableItem");
 const bookingItem = require("./controller/bookingItem");
-const orderItems = require("./controller/orderItems");
+
 const authentication = require("./controller/authentication");
 const cors = require("cors");
 const path = require("path");
+const http = require("http"); //using server http so that it can support socket
+const socketIo = require("socket.io"); //for real time notification
 const cookieParser = require("cookie-parser");
+const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:5175",
 ];
-const app = express();
+
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: allowedOrigins,
+    credentials: true,
+  },
+});
+io.on("connection", (socket) => {
+  console.log("a cient connected via socked.io");
+
+  socket.on("disconnected", () => {
+    console.log("Client disconnected");
+  });
+});
+
 app.use(express.json());
 app.use(
   cors({
@@ -48,9 +66,11 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads"))); //app.use 
 app.use("/api", cartItem);
 app.use("/api", tableItem);
 app.use("/api", bookingItem);
-app.use("/api", orderItems);
 app.use("/api", authentication);
 
-app.listen(5000, () => {
-  console.log("server connected");
+const orderItems = require("./controller/orderItems")(io)//io lae ordercontroller ma pass gareko
+app.use("/api", orderItems);
+
+server.listen(5000, () => {
+  console.log("Server running on port 5000");
 });

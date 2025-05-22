@@ -6,6 +6,7 @@ import ManageBooking from "./pages/ManageBooking";
 import ManageDishes from "./pages/ManageDishes";
 import ManageTables from "./pages/ManageTables";
 import OrderLine from "./pages/OrderLine";
+import Notification from "./components/Notification";
 function App() {
   return (
     <>
@@ -17,6 +18,7 @@ function App() {
           <Route path="/managetable" element={<ManageTables />} />
           <Route path="/managedishes/:category" element={<ManageDishes />} />
           <Route path="/managebooking" element={<ManageBooking />} />
+          <Route path="/notification" element={<Notification />} />
         </Route>
       </Routes>
     </>

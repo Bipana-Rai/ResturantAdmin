@@ -24,6 +24,9 @@ const dineIn = new mongoose.Schema(
     foodStatus: {
       type: String,
     },
+    user:{
+      type:String
+    }
   },
   { timestamps: true }
 );

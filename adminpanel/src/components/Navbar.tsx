@@ -1,8 +1,10 @@
 import { IoSearchOutline } from "react-icons/io5";
 import { CiBellOn } from "react-icons/ci";
 import { FaBowlFood } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate=useNavigate()
   return (
     <>
      <div className="w-full  items-center fixed top-0 z-20">
@@ -25,7 +27,7 @@ function Navbar() {
           />
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-8 w-8 border-1 border-gray-200 rounded-full  flex items-center justify-center">
+          <div className="h-8 w-8 border-1 border-gray-200 rounded-full  flex items-center justify-center" onClick={()=>navigate("/notification")}>
             <CiBellOn />
           </div>
           <div className="flex items-center gap-2 pe-5">
