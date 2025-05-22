@@ -20,6 +20,7 @@ function OrderLine() {
       )
     );
   };
+  console.log(orderDetail)
   useEffect(() => {
     dispatch(getDineIn());
   }, [dispatch]);

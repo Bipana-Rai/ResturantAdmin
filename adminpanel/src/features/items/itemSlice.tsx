@@ -225,28 +225,9 @@ export const updateDineInStatus = createAsyncThunk(
     }
   }
 );
-export const authorizeUser = createAsyncThunk(
-  "authorizeUser",
-  async (__, { rejectWithValue }) => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/verify");
-      return response.data.user;
-    } catch (error) {
-      const err = error as AppAxiosError;
-      return rejectWithValue(err.response?.data || err.message);
-    }
-  }
-);
 interface Category {
   category: string;
   image?: string;
-}
-interface userInfo {
-  _id: string;
-  email: string;
-  fullName: string;
-  phone: string;
-  role: string;
 }
 interface Dishes {
   dishName: string;
@@ -300,7 +281,6 @@ interface CategoryState {
   orderDetail: orderData[];
   error: string | null;
   bookingDetail: BookedData[];
-  user: userInfo | null;
 }
 
 const initialState: CategoryState = {
@@ -310,7 +290,6 @@ const initialState: CategoryState = {
   tableDetail: [],
   bookingDetail: [],
   orderDetail: [],
-  user: null,
   error: null,
 };
 const itemSlice = createSlice({
@@ -449,10 +428,6 @@ const itemSlice = createSlice({
       .addCase(getDineIn.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      })
-      .addCase(authorizeUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload;
       });
   },
 });

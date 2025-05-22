@@ -1,17 +1,11 @@
-import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
+// import { RootState } from "@/store/store";
+// import { useSelector } from "react-redux";
+// import { Navigate, Outlet } from "react-router-dom";
 
-function ProtectedRoute() {
-  const { user } = useSelector((state: RootState) => state.item);
-  console.log("----", user);
- if (user === undefined) {
-    return null; // or a loading spinner
-  }
-if(user?.role==="admin"){
-return user ? <Outlet /> : <Navigate to="/" replace />;
-}
-  
-}
+// function ProtectedRoute() {
+ 
 
-export default ProtectedRoute;
+//   return user ? <Outlet /> : <Navigate to="/" replace />;
+// }
+
+// export default ProtectedRoute;
