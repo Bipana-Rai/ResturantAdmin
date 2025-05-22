@@ -7,7 +7,29 @@ import ManageDishes from "./pages/ManageDishes";
 import ManageTables from "./pages/ManageTables";
 import OrderLine from "./pages/OrderLine";
 import Notification from "./components/Notification";
+import { io } from "socket.io-client";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { addNotification } from "./features/items/notificationSlice";
+import { AppDispatch } from "./store/store";
+import { getDineIn } from "./features/items/itemSlice";
+const socket = io("http://localhost:5000", {
+  withCredentials: true,
+});
+
 function App() {
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    socket.on("newDineInOrder", (data) => {
+      console.log("Received dine-in order via socket:", data);
+      dispatch(addNotification(data));
+      dispatch(getDineIn())
+    });
+    return () => {
+      socket.off("newDineInOrder");
+    };
+  }, [dispatch]);
+
   return (
     <>
       <Routes>

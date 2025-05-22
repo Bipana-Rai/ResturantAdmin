@@ -33,8 +33,8 @@ function Sidebar() {
           ))}
         </div>
         <div className="  flex flex-col  gap-4 px-10 pb-20 ">
-          {account.map((e) => (
-            <div className="flex items-center gap-3">
+          {account.map((e,i) => (
+            <div key={i} className="flex items-center gap-3">
               {e.icon}
               <p>{e.tab}</p>
             </div>

@@ -6,7 +6,6 @@ module.exports = function (io) {
   //io ya use gareko jun chai index bata pathayeko thim
   router.post("/addDineIn", async (req, res) => {
     const data = req.body;
-    console.log(data);
     try {
       const dineOeder = new DineInModel(data);
       const saveData = await dineOeder.save();
@@ -14,10 +13,11 @@ module.exports = function (io) {
       //ya chai real-time notification call or emit garxa
       io.emit("newDineInOrder", {
         table: saveData.tableNumber,
-        itemsCount: saveData.cartItems?.length || 0,
+        cartItems: saveData.cartItems,
         totalAmount: saveData.totalAmount,
         user: saveData.user,
         status: saveData.status,
+        _id:saveData._id
       });
       res.status(200).json(saveData);
     } catch (error) {
@@ -35,7 +35,6 @@ module.exports = function (io) {
   router.put("/updateDineInStatus/:id", async (req, res) => {
     const { id } = req.params;
     const data = req.body;
-    // console.log(data,id);
     try {
       const dineOeder = await DineInModel.findByIdAndUpdate(id, data);
       res.status(200).json(saveData);
