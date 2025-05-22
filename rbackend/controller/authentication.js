@@ -9,9 +9,9 @@ const nodemailer = require("nodemailer");
 
 router.post("/signupData", async (req, res) => {
   try {
-    const { email, password, fullName, phone } = req.body;
+    const { email, password, fullName, phone,role } = req.body;
     console.log("hello");
-    if (!email || !password || !fullName || !phone) {
+    if (!email || !password || !fullName || !phone ||!role) {
       return res.status(400).json({ message: "Missing Field" });
     }
 
@@ -25,6 +25,7 @@ router.post("/signupData", async (req, res) => {
       password: hashPassword,
       fullName,
       phone,
+      role
     });
     const saveData = await user.save();
 
