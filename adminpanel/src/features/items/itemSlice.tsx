@@ -252,7 +252,8 @@ export interface orderData {
   totalAmount: number;
   status: string;
   foodStatus?: string;
-  user?:string
+  user?:string,
+  createdAt:string
 }
 export interface TableData {
   _id: string;

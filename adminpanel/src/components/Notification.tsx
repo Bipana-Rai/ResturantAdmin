@@ -2,6 +2,8 @@ import { getDineIn } from "@/features/items/itemSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 function Notification() {
   const dispatch = useDispatch<AppDispatch>();
@@ -9,7 +11,8 @@ function Notification() {
   const { notification } = useSelector(
     (state: RootState) => state.notification
   );
-
+  dayjs.extend(relativeTime);
+ 
   useEffect(() => {
     dispatch(getDineIn());
   }, [dispatch]);
@@ -57,7 +60,7 @@ function Notification() {
 
                 <div className="flex items-center gap-4 text-gray-500 d">
                   <p className="font-semibold text-red-600">{data.status}</p>{" "}
-                  <p className="text-sm">2 minutes ago </p>
+                  <p className="text-sm">{dayjs(data.createdAt).fromNow()} </p>
                 </div>
               </div>
             </div>

@@ -7,6 +7,7 @@ export type DineInNotification = {
   totalAmount: number;
   user: string;
   status: string;
+  createdAt:string
 };
 type NotificationState = {
   notification: DineInNotification[];
