@@ -28,7 +28,7 @@ function Notify({ notification }: NotifyProps) {
   return (
     <>
       <div className="fixed top-0 z-40 w-full   ">
-        <div className="flex flex-col items-center h-25 rounded-sm   bg-[#246b80ce] gap-2 text-gray-50 justify-center">
+        <div className="flex flex-col items-center h-25   bg-[#246b80ce] gap-2 text-gray-50 justify-center">
           <p className="text-2xl ">New Order Arrived !</p>
           <p> {message}</p>
         </div>

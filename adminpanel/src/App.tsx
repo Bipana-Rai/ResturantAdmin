@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { addNotification } from "./features/items/notificationSlice";
 import { AppDispatch } from "./store/store";
 import { getDineIn } from "./features/items/itemSlice";
+import SingleOrder from "./components/SingleOrder";
 const socket = io("http://localhost:5000", {
   withCredentials: true,
 });
@@ -41,6 +42,7 @@ function App() {
           <Route path="/managedishes/:category" element={<ManageDishes />} />
           <Route path="/managebooking" element={<ManageBooking />} />
           <Route path="/notification" element={<Notification />} />
+          <Route path="/singleData/:id" element={<SingleOrder />} />
         </Route>
       </Routes>
     </>
