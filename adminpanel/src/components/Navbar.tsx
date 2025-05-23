@@ -38,7 +38,7 @@ function Navbar() {
           </div>
           <div className="flex items-center gap-5">
             <div
-              className="h-10 w-10 border-1 border-gray-400 rounded-full  flex items-center relative justify-center"
+              className="h-10 w-10 border-1 border-gray-400 cursor-pointer rounded-full  flex items-center relative justify-center"
               onClick={handleNotificationsViewed}
             >
               <CiBellOn />
