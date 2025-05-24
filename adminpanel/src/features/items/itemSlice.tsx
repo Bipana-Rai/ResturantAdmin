@@ -225,6 +225,18 @@ export const updateDineInStatus = createAsyncThunk(
     }
   }
 );
+export const authorizeUser = createAsyncThunk(
+  "authorizeUser",
+  async (__, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/verify");
+      return response.data.user;
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
 interface Category {
   category: string;
   image?: string;
@@ -252,8 +264,8 @@ export interface orderData {
   totalAmount: number;
   status: string;
   foodStatus?: string;
-  user?:string,
-  createdAt:string
+  user?: string;
+  createdAt: string;
 }
 export interface TableData {
   _id: string;
@@ -275,6 +287,13 @@ export interface BookedData {
   createdAt: string;
   status: string;
 }
+interface userInfo {
+  _id: string;
+  email: string;
+  fullName: string;
+  phone: string;
+  role: string;
+}
 interface CategoryState {
   loading: boolean;
   categoryDetail: Category[];
@@ -283,6 +302,7 @@ interface CategoryState {
   orderDetail: orderData[];
   error: string | null;
   bookingDetail: BookedData[];
+  user: userInfo | null;
 }
 
 const initialState: CategoryState = {
@@ -292,13 +312,19 @@ const initialState: CategoryState = {
   tableDetail: [],
   bookingDetail: [],
   orderDetail: [],
+  user: null,
   error: null,
 };
 const itemSlice = createSlice({
   name: "item",
   initialState,
 
-  reducers: {},
+ reducers: {
+    logoutUser:(state)=>{
+      state.loading=false
+      state.user=null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addCategory.pending, (state) => {
@@ -430,7 +456,12 @@ const itemSlice = createSlice({
       .addCase(getDineIn.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(authorizeUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
       });
   },
 });
+export const {logoutUser}=itemSlice.actions
 export default itemSlice.reducer;

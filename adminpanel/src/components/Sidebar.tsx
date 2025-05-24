@@ -1,19 +1,24 @@
 import sidebarContent from "../data/sidebarContent";
 import account from "../data/accountsettings";
 import { useLocation, useNavigate } from "react-router-dom";
+import { IoMdLogOut } from "react-icons/io";
 type sidebarItem = {
   tab: string;
   path: string;
   icon: React.ReactNode;
 };
+interface sidebarProps{
+  setLogout:(logout:boolean)=>void
+}
 
-function Sidebar() {
+function Sidebar({setLogout}:sidebarProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleClick = (e: sidebarItem) => {
     navigate(e.path);
   };
+
 
   return (
     <>
@@ -39,6 +44,7 @@ function Sidebar() {
               <p>{e.tab}</p>
             </div>
           ))}
+          <p className="flex items-center gap-4 cursor-pointer" onClick={()=>setLogout(true)}><IoMdLogOut />  Logout </p>
         </div>
       </div>
     </>
