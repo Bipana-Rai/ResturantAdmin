@@ -66,10 +66,19 @@ router.post("/loginData", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-router.get("/verify", verifyJWT, (req, res) => {
-  console.log("Cookies in Verify Route:", req.cookies);
+router.get("/customer/verify", verifyJWT, (req, res) => {
+  if (req.user.role !== "customer") {
+    return res.status(403).json({ message: "Access denied: Not a customer" });
+  }
   res.status(200).json({ message: "user verified", user: req.user });
 });
+router.get("/admin/verify", verifyJWT, (req, res) => {
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ message: "Access denied: Not an admin" });
+  }
+  res.status(200).json({ message: "admin verified", user: req.user });
+});
+
 router.post("/logout", (req, res) => {
   res.clearCookie("jwt", {
     httpOnly: true,

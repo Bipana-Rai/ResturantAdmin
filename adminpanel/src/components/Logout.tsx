@@ -21,7 +21,9 @@ function Logout({ setLogout }: sidebarProps) {
       );
       dispatch(logoutUser());
        await persistor.purge();
-      window.location.replace("http://localhost:5174");
+     setTimeout(() => {
+  window.location.replace("http://localhost:5174");
+}, 100);
     } catch (error) {
       console.error("Logout failed:", error);
     }
