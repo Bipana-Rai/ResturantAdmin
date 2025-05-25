@@ -1,5 +1,5 @@
 import { logoutUser } from "@/features/items/itemSlice";
-import { AppDispatch, persistor } from "@/store/store";
+import { AppDispatch } from "@/store/store";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { ImCross } from "react-icons/im";
@@ -20,10 +20,7 @@ function Logout({ setLogout }: sidebarProps) {
         { withCredentials: true }
       );
       dispatch(logoutUser());
-       await persistor.purge();
-     setTimeout(() => {
-  window.location.replace("http://localhost:5174");
-}, 100);
+      window.location.replace("http://localhost:5174");
     } catch (error) {
       console.error("Logout failed:", error);
     }
