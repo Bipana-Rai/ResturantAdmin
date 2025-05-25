@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const takeawayModel = require("../models/takeawayModel");
 const crypto = require("crypto");
+const axios = require("axios");
+const qs = require("qs");
 
 // eSewa configuration
 const esewaConfig = {
@@ -9,7 +11,7 @@ const esewaConfig = {
   successUrl: process.env.ESEWA_SUCCESS_URL,
   failureUrl: process.env.ESEWA_FAILURE_URL,
   secretKey: process.env.ESEWA_SECRET_KEY,
-  paymentUrl: "https://rc-epay.esewa.com.np/api/epay/main/v2/form"
+  paymentUrl: "https://rc.esewa.com.np/epay/main",
 };
 
 // Generate HMAC SHA256 hash for eSewa
@@ -28,8 +30,8 @@ function generateHmacSha256Hash(data, secret) {
 
 router.post("/takeaway", async (req, res) => {
   const { name, number, cartItems, totalAmount, status } = req.body;
-  console.log("take",req.body)
-  console.log("byee")
+  console.log("take", req.body);
+  console.log("byee");
 
   try {
     // Create order
@@ -61,30 +63,24 @@ router.post("/takeaway", async (req, res) => {
     };
 
     // Generate signature
-    const data = `total_amount=${paymentData.total_amount},transaction_uuid=${paymentData.transaction_uuid},product_code=${paymentData.product_code}`;
-    const signature = generateHmacSha256Hash(data, esewaConfig.secretKey);
+    const queryString = new URLSearchParams(paymentData).toString();
 
     // Add signature to payment data
-    paymentData.signature = signature;
+    const paymentUrl = `https://esewa.com.np/epay/main?${queryString}`;
 
-    // Make eSewa payment request
-    const response = await axios.post(esewaConfig.paymentUrl, null, {
-      params: paymentData,
-    });
-
-    const reqPayment = JSON.parse(response.request.res.responseUrl);
     
-    // Return payment URL to client
+
+    
     res.status(200).json({
-      url: reqPayment,
-      orderId: orderId,
+      url: paymentUrl,
+      orderId,
       amount: totalAmount,
     });
   } catch (error) {
     console.error("Error while creating takeaway order:", error);
-    res.status(500).json({ 
+    res.status(500).json({
       message: "Failed to create takeaway order",
-      error: error.message 
+      error: error.message,
     });
   }
 });

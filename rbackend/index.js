@@ -1,4 +1,5 @@
 const express = require("express");
+require('dotenv').config()
 const mongoose = require("mongoose");
 const addItems = require("./controller/addItems");
 const cartItem = require("./controller/cartItem");
@@ -11,7 +12,7 @@ const path = require("path");
 const http = require("http"); //using server http so that it can support socket
 const socketIo = require("socket.io"); //for real time notification
 const cookieParser = require("cookie-parser");
-require('dotenv').config()
+
 const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
