@@ -4,13 +4,14 @@ const addItems = require("./controller/addItems");
 const cartItem = require("./controller/cartItem");
 const tableItem = require("./controller/tableItem");
 const bookingItem = require("./controller/bookingItem");
-
+const takeawayOrders=require("./controller/takeawayOrders")
 const authentication = require("./controller/authentication");
 const cors = require("cors");
 const path = require("path");
 const http = require("http"); //using server http so that it can support socket
 const socketIo = require("socket.io"); //for real time notification
 const cookieParser = require("cookie-parser");
+require('dotenv').config()
 const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
@@ -67,6 +68,7 @@ app.use("/api", cartItem);
 app.use("/api", tableItem);
 app.use("/api", bookingItem);
 app.use("/api", authentication);
+app.use("/api", takeawayOrders);
 
 const orderItems = require("./controller/orderItems")(io)//io lae ordercontroller ma pass gareko
 app.use("/api", orderItems);
