@@ -23,6 +23,18 @@ const takeaway = new mongoose.Schema(
       type: String,
       require: true,
     },
+    paymentDetails: {
+      method: String,
+      esewaRef: String,
+    },
+    status:{
+      type:String,
+    },
+   takeAwayStatus: {
+      type: String,
+      enum: ["pending", "paid", "failed"],
+      default: "pending",
+    },
   },
   { timestamps: true }
 );
