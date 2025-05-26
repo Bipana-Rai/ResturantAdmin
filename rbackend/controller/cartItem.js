@@ -4,17 +4,21 @@ const router = express.Router();
 router.post("/cart", async (req, res) => {
   try {
     const data = req.body;
+    console.log(data)
     const newdata = new cartItemSchema(data);
     const saveData = await newdata.save();
+    console.log("saveData",saveData)
     res.status(201).json({ message: "cart save item", data: saveData });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
-router.get("/getCart", async (req, res) => {
+router.get("/getCart/:userId", async (req, res) => {
+  const {userId}=req.params  
   try {
-    const data = await cartItemSchema.find();
+    const data = await cartItemSchema.find({userId});
     res.status(201).json({ message: "cart save item", data });
+   
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -42,9 +46,10 @@ router.delete("/deleteCartItem/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-router.delete("/deleteCartOrder", async (req, res) => {
+router.delete("/deleteCartOrder/:userId", async (req, res) => {
+const {userId}=req.params
   try {
-    const deleteItem = await cartItemSchema.deleteMany({});
+    const deleteItem = await cartItemSchema.deleteMany({userId});
     res.status(200).json(deleteItem);
   } catch (error) {
     res.status(500).json({ message: error.message });
