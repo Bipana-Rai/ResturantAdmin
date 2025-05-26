@@ -14,22 +14,11 @@ const esewaConfig = {
   paymentUrl: "https://rc.esewa.com.np/epay/main",
 };
 
-// Generate HMAC SHA256 hash for eSewa
-function generateHmacSha256Hash(data, secret) {
-  if (!data || !secret) {
-    throw new Error("Both data and secret are required to generate a hash.");
-  }
 
-  const hash = crypto
-    .createHmac("sha256", secret)
-    .update(data)
-    .digest("base64");
-
-  return hash;
-}
 
 router.post("/takeaway", async (req, res) => {
-  const { name, number, cartItems, totalAmount, status } = req.body;
+  const { name, number, cartItems, totalAmount, status, takeAwayStatus } =
+    req.body;
   console.log("take", req.body);
   console.log("byee");
 
@@ -43,6 +32,7 @@ router.post("/takeaway", async (req, res) => {
       cartItems,
       totalAmount,
       status,
+      takeAwayStatus,
     });
 
     // Save order to database
@@ -68,9 +58,6 @@ router.post("/takeaway", async (req, res) => {
     // Add signature to payment data
     const paymentUrl = `https://esewa.com.np/epay/main?${queryString}`;
 
-    
-
-    
     res.status(200).json({
       url: paymentUrl,
       orderId,
@@ -82,6 +69,46 @@ router.post("/takeaway", async (req, res) => {
       message: "Failed to create takeaway order",
       error: error.message,
     });
+  }
+});
+router.get("/esewa-success", async (req, res) => {
+  const { oid } = req.query;
+  console.log(req.query);
+  try {
+    const order = await takeawayModel.findOne({ orderId: oid });
+    if (!order) return res.status(404).json({ message: "order not found" });
+    order.takeAwayStatus = "paid";
+    order.paymentDetails = {
+      method: "Esewa",
+      esewaRef: req.query.refId || "ref-missing",
+    };
+    await order.save();
+    res.redirect("http://localhost:5174/menu");
+  } catch (error) {
+    res.status(500).json("Server error");
+  }
+});
+router.get("/esewa-failure", async (req, res) => {
+  const { oid } = req.query;
+   console.log(req.query);
+  try {
+    const order = await takeawayModel.findOne({ orderId: oid });
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    order.takeAwayStatus = "failed";
+    order.paymentDetails = {
+      method: "Esewa",
+      esewaRef: req.query.refId || "ref-missing",
+    };
+
+    await order.save();
+
+    res.redirect("http://localhost:5174/menu"); // Or redirect to a failure page
+  } catch (err) {
+    console.error("eSewa failure error:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 });
 
