@@ -14,8 +14,6 @@ const esewaConfig = {
   paymentUrl: "https://rc.esewa.com.np/epay/main",
 };
 
-
-
 router.post("/takeaway", async (req, res) => {
   const { name, number, cartItems, totalAmount, status, takeAwayStatus } =
     req.body;
@@ -90,7 +88,7 @@ router.get("/esewa-success", async (req, res) => {
 });
 router.get("/esewa-failure", async (req, res) => {
   const { oid } = req.query;
-   console.log(req.query);
+  console.log(req.query);
   try {
     const order = await takeawayModel.findOne({ orderId: oid });
     if (!order) {
@@ -109,6 +107,14 @@ router.get("/esewa-failure", async (req, res) => {
   } catch (err) {
     console.error("eSewa failure error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+router.get("/getTakeAway", async (req, res) => {
+  try {
+    const data = await takeawayModel.find().sort({ createdAt: -1 });
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 

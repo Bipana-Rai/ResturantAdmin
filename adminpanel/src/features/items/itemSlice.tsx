@@ -203,6 +203,18 @@ export const getDineIn = createAsyncThunk(
     }
   }
 );
+export const getTakeAway = createAsyncThunk(
+  "getTakeAway",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/getTakeAway");
+      return res.data;
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
 export const updateDineInStatus = createAsyncThunk(
   "updateDineInStatus ",
   async (
@@ -229,8 +241,11 @@ export const authorizeUser = createAsyncThunk(
   "authorizeUser",
   async (__, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://localhost:5000/api/admin/verify",{ withCredentials: true });
-      if(response.data.user !=="admin"){
+      const response = await axios.get(
+        "http://localhost:5000/api/admin/verify",
+        { withCredentials: true }
+      );
+      if (response.data.user !== "admin") {
         return rejectWithValue("Unauthorized user role for admin app");
       }
       return response.data.user;
@@ -269,6 +284,9 @@ export interface orderData {
   foodStatus?: string;
   user?: string;
   createdAt: string;
+  orderId: string;
+  takeAwayStatus: string;
+
 }
 export interface TableData {
   _id: string;
@@ -306,6 +324,7 @@ interface CategoryState {
   error: string | null;
   bookingDetail: BookedData[];
   user: userInfo | null;
+  takeawayOrder: orderData[];
 }
 
 const initialState: CategoryState = {
@@ -315,6 +334,7 @@ const initialState: CategoryState = {
   tableDetail: [],
   bookingDetail: [],
   orderDetail: [],
+  takeawayOrder: [],
   user: null,
   error: null,
 };
@@ -322,11 +342,11 @@ const itemSlice = createSlice({
   name: "item",
   initialState,
 
- reducers: {
-    logoutUser:(state)=>{
-      state.loading=false
-      state.user=null;
-    }
+  reducers: {
+    logoutUser: (state) => {
+      state.loading = false;
+      state.user = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -463,8 +483,20 @@ const itemSlice = createSlice({
       .addCase(authorizeUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
-      });
+      })
+        .addCase(getTakeAway.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getTakeAway.fulfilled, (state, action) => {
+        state.loading = false;
+        state.takeawayOrder = action.payload as orderData[];
+      })
+      .addCase(getTakeAway.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
   },
 });
-export const {logoutUser}=itemSlice.actions
+export const { logoutUser } = itemSlice.actions;
 export default itemSlice.reducer;

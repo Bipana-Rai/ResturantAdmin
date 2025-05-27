@@ -27,9 +27,7 @@ const takeaway = new mongoose.Schema(
       method: String,
       esewaRef: String,
     },
-    status:{
-      type:String,
-    },
+  
    takeAwayStatus: {
       type: String,
       enum: ["pending", "paid", "failed"],
