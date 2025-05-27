@@ -23,6 +23,7 @@ function App() {
   const dispatch = useDispatch<AppDispatch>();
   
   useEffect(() => {
+   
     socket.on("newDineInOrder", (data) => {
       console.log("Received dine-in order via socket:", data);
       dispatch(addNotification(data));
