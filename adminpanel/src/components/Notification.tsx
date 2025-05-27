@@ -25,7 +25,7 @@ function Notification() {
         <p className="text-2xl px-8 font-semibold">Notification</p>
       </div>
       <div className="pt-15">
-        {[...orderDetail]?.reverse().map((data, i) => {
+        {[...orderDetail]?.map((data, i) => {
           const isNew = notification.some((n) => n._id === data._id);
           return (
             <div
