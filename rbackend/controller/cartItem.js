@@ -4,21 +4,26 @@ const router = express.Router();
 router.post("/cart", async (req, res) => {
   try {
     const data = req.body;
-    console.log(data)
-    const newdata = new cartItemSchema(data);
-    const saveData = await newdata.save();
-    console.log("saveData",saveData)
-    res.status(201).json({ message: "cart save item", data: saveData });
+    if (data._id) {
+      delete data._id;
+    }
+
+    const newCartItem = new cartItemSchema(data);
+    const savedCartItem = await newCartItem.save();
+    return res
+      .status(201)
+      .json({ message: "New cart item added", data: savedCartItem });
   } catch (error) {
+    console.error("Error in /cart:", error);
     res.status(500).json({ message: error.message });
   }
 });
+
 router.get("/getCart/:userId", async (req, res) => {
-  const {userId}=req.params  
+  const { userId } = req.params;
   try {
-    const data = await cartItemSchema.find({userId});
+    const data = await cartItemSchema.find({ userId });
     res.status(201).json({ message: "cart save item", data });
-   
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -47,9 +52,9 @@ router.delete("/deleteCartItem/:id", async (req, res) => {
   }
 });
 router.delete("/deleteCartOrder/:userId", async (req, res) => {
-const {userId}=req.params
+  const { userId } = req.params;
   try {
-    const deleteItem = await cartItemSchema.deleteMany({userId});
+    const deleteItem = await cartItemSchema.deleteMany({ userId });
     res.status(200).json(deleteItem);
   } catch (error) {
     res.status(500).json({ message: error.message });
