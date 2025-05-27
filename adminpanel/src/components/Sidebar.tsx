@@ -27,8 +27,8 @@ function Sidebar({setLogout}:sidebarProps) {
           {sidebarContent.map((e, i) => (
             <div
               key={i}
-              className={`flex items-center gap-3 px-8 py-2 hover:bg-cyan-600 rounded-2xl  w-full    cursor-pointer ${
-                location.pathname === e.path ? "bg-cyan-600" : ""
+              className={`flex items-center gap-3 px-8 py-2 hover:bg-cyan-600 hover:text-gray-50  rounded-2xl  w-full    cursor-pointer ${
+                location.pathname === e.path ? "bg-cyan-600 text-gray-50" : ""
               }`}
               onClick={() => handleClick(e)}
             >
