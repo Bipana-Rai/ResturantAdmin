@@ -3,8 +3,8 @@ import { orderData } from "@/features/items/itemSlice";
 import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
 interface OrderLineProps {
-  data: orderData ;
-  setFilterData: React.Dispatch<React.SetStateAction<orderData[]>>
+  data: orderData;
+  setFilterData: React.Dispatch<React.SetStateAction<orderData[]>>;
 }
 
 function OrderCard({ data, setFilterData }: OrderLineProps) {
@@ -24,7 +24,11 @@ function OrderCard({ data, setFilterData }: OrderLineProps) {
           <p className="text-lg font-semibold font-serif">
             Table #{data.tableNumber}
           </p>
-          <p className="bg-cyan-200 px-4 rounded-md text-blue-500 text-sm">
+          <p
+            className={` px-4 rounded-md text-sm ${
+              data.status === "takeAway" ? "bg-black text-gray-50" : "bg-gray-300"
+            }`}
+          >
             {data.status}
           </p>
         </div>
