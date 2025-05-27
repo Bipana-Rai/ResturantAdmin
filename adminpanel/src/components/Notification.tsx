@@ -7,14 +7,14 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { useNavigate } from "react-router-dom";
 
 function Notification() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { orderDetail } = useSelector((state: RootState) => state.item);
   const { notification } = useSelector(
     (state: RootState) => state.notification
   );
   dayjs.extend(relativeTime);
- 
+
   useEffect(() => {
     dispatch(getDineIn());
   }, [dispatch]);
@@ -33,7 +33,7 @@ function Notification() {
               className={`${
                 isNew ? "bg-gray-200" : "bg-white"
               } gap-7 px-8 flex items-center border-b border-gray-400 py-2 cursor-pointer`}
-              onClick={()=>navigate(`/singleData/${data._id}`)}
+              onClick={() => navigate(`/singleData/${data._id}`)}
             >
               <div className="h-17 w-17 relative flex items-end justify-center  rounded-full bg-gray-300 overflow-hidden ">
                 <img src="/profile.webp" alt="" className="w-14" />
@@ -44,8 +44,7 @@ function Notification() {
                 </p>
 
                 <p className="text-sm text-gray-500">
-                  {data.user}has palced a ${data.totalAmount} order{" "}
-                  {data.cartItems.length} for items.
+                  {data.user} has palced a ${data.totalAmount} order for  {data.cartItems.length} items.
                 </p>
                 <div className=" text-gray-600 flex text-sm">
                   <p className="text-cyan-600 gap-2 flex flex-wrap">
