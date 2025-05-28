@@ -3,10 +3,10 @@ const waitlist = [
     list: "All",
   },
   {
-    list: "in Kitchen",
+    list: "in kitchen",
   },
   {
-    list: "Waiting",
+    list: "waiting",
   },
   {
     list: "served",
