@@ -36,8 +36,8 @@ module.exports = function (io) {
     const { id } = req.params;
     const data = req.body;
     try {
-      const dineOeder = await DineInModel.findByIdAndUpdate(id, data);
-      res.status(200).json(saveData);
+      const dineOrder = await DineInModel.findByIdAndUpdate(id, data);
+      res.status(200).json(dineOrder);
     } catch (error) {
      res.status(500).json({ message: error.message });
     }
