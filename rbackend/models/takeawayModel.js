@@ -27,8 +27,10 @@ const takeaway = new mongoose.Schema(
       method: String,
       esewaRef: String,
     },
-  
-   takeAwayStatus: {
+    foodStatus: {
+      type: String,
+    },
+    takeAwayStatus: {
       type: String,
       enum: ["pending", "paid", "failed"],
       default: "pending",
