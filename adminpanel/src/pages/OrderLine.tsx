@@ -1,7 +1,7 @@
 import OrderCard from "@/components/OrderCard";
 import OrderInfoCard from "@/components/OrderInfoCard";
 import waitlist from "@/data/waitlist";
-import { getDineIn, getTakeAway, orderData } from "@/features/items/itemSlice";
+import { getDineIn, getTakeAway} from "@/features/items/itemSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,17 +11,19 @@ function OrderLine() {
   const { orderDetail, takeawayOrder } = useSelector(
     (state: RootState) => state.item
   );
-  const [filterData, setFilterData] = useState<orderData[]>(orderDetail);
-  const [showDine, setShowDine] = useState(true);
 
-  console.log("talke", takeawayOrder);
+  const [showDine, setShowDine] = useState(true);
+  const [currentStatus,setCurrentStatus]=useState("All")
+  console.log(currentStatus)
+ const filterDineIn=currentStatus==="All"?orderDetail:(orderDetail.filter((e)=>e.foodStatus==currentStatus))
+ console.log(filterDineIn)
+
+
   useEffect(() => {
     dispatch(getDineIn());
     dispatch(getTakeAway());
   }, [dispatch]);
-  useEffect(() => {
-    setFilterData(orderDetail);
-  }, [orderDetail]);
+
   return (
     <>
       <div className="flex fixed w-[82vw]  bg-white justify-between px-8 pt-3 border-b-1  items-center pb-2 border-gray-300 ">
@@ -39,14 +41,14 @@ function OrderLine() {
       <div className="rounded-xl pt-19 ps-5">
         <div className="flex justify-around px-10">
           {waitlist.map((e, i) => (
-            <button key={i} className={` w-30 cursor-pointer rounded-sm px-4 py-1 border-1  border-gray-300 `}>
+            <button key={i} className={` w-30 cursor-pointer rounded-sm px-4 py-1 border-1  border-gray-300 `}onClick={()=>setCurrentStatus(e.list)}>
               <p>{e.list}</p>
             </button>
           ))}
         </div>
         {showDine ? (
           <div className="scroll-hidden py-8 flex gap-2   overflow-x-auto">
-            {orderDetail?.map((data) => (
+            {filterDineIn?.map((data) => (
               <OrderInfoCard key={data._id} data={data} />
             ))}
           </div>
@@ -61,14 +63,14 @@ function OrderLine() {
 
       {showDine ? (
         <div className="py-4 ps-7   flex gap-5 flex-wrap">
-          {filterData?.map((data) => (
-            <OrderCard data={data} setFilterData={setFilterData} />
+          {filterDineIn?.map((data) => (
+            <OrderCard data={data}  />
           ))}
         </div>
       ) : (
         <div className="py-4 ps-7   flex gap-5 flex-wrap">
           {takeawayOrder?.map((data) => (
-            <OrderCard data={data} setFilterData={setFilterData} />
+            <OrderCard data={data}  />
           ))}
         </div>
       )}
