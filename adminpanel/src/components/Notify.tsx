@@ -10,6 +10,18 @@ function Notify({ notification }: NotifyProps) {
   useEffect(() => {
     if (notification.length > 0) {
       const lastNotification = notification[notification.length - 1];
+      // Get shown IDs from localStorage
+      const shownIds: string[] = JSON.parse(
+        localStorage.getItem("shownNotificationIds") || "[]"
+      );
+
+      // If already shown, skip
+      if (shownIds.includes(lastNotification._id)) return;
+
+      // Add ID to localStorage
+      const updatedIds = [...shownIds, lastNotification._id];
+      localStorage.setItem("shownNotificationIds", JSON.stringify(updatedIds));
+
       const audio = new Audio("/Notification.mp3");
       audio.play().catch((error) => {
         console.warn("cannot play audio", error);
