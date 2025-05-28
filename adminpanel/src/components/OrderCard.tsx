@@ -4,19 +4,13 @@ import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
 interface OrderLineProps {
   data: orderData;
-  setFilterData: React.Dispatch<React.SetStateAction<orderData[]>>;
 }
 
-function OrderCard({ data, setFilterData }: OrderLineProps) {
+function OrderCard({ data }: OrderLineProps) {
   const dispatch = useDispatch<AppDispatch>();
-  const handleStatusChange = (id?: string, status?: string) => {
-    dispatch(updateDineInStatus({ id, status: status }));
-    dispatch(getDineIn())
-    setFilterData((prev) =>
-      prev.map((order) =>
-        order._id === id ? { ...order, foodStatus: status } : order
-      )
-    );
+  const handleStatusChange =async (id?: string, status?: string) => {
+   await dispatch(updateDineInStatus({ id, status: status }));
+    dispatch(getDineIn());
   };
   return (
     <div className="w-[340px] flex gap-2 flex-col justify-between shadow-[0_3px_10px_rgb(0,0,0,0.2)] py-3 bg-gray-50 px-4 border-1 border-gray-400 border-dashed">
@@ -27,7 +21,9 @@ function OrderCard({ data, setFilterData }: OrderLineProps) {
           </p>
           <p
             className={` px-4 rounded-md text-sm ${
-              data.status === "takeAway" ? "bg-black text-gray-50" : "bg-gray-300"
+              data.status === "takeAway"
+                ? "bg-black text-gray-50"
+                : "bg-gray-300"
             }`}
           >
             {data.status}
