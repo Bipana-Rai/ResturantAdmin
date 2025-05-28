@@ -221,7 +221,6 @@ export const updateDineInStatus = createAsyncThunk(
     { id, status }: { id?: string; status?: string },
     { rejectWithValue }
   ) => {
-    console.log(id, status);
     try {
       const res = await axios.put(
         `http://localhost:5000/api/updateDineInStatus/${id}`,
@@ -286,7 +285,6 @@ export interface orderData {
   createdAt: string;
   orderId: string;
   takeAwayStatus: string;
-
 }
 export interface TableData {
   _id: string;
@@ -484,7 +482,7 @@ const itemSlice = createSlice({
         state.loading = false;
         state.user = action.payload;
       })
-        .addCase(getTakeAway.pending, (state) => {
+      .addCase(getTakeAway.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -496,7 +494,14 @@ const itemSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-    
+      .addCase(updateDineInStatus.fulfilled, (state, action) => {
+        state.loading = false;
+        const { id, data } = action.payload;
+        const index = state.orderDetail.findIndex((order) => order._id === id);
+        if (index !== -1) {
+          state.orderDetail[index].foodStatus = data.foodStatus;
+        }
+      });
   },
 });
 export const { logoutUser } = itemSlice.actions;
