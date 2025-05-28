@@ -236,6 +236,29 @@ export const updateDineInStatus = createAsyncThunk(
     }
   }
 );
+export const updateTakeAwayStatus = createAsyncThunk(
+  "updateTakeAwayStatus ",
+  async (
+    { id, status }: { id?: string; status?: string },
+
+    { rejectWithValue }
+  ) => {
+     console.log("ii",id,status)
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/api/updateTakeAwayStatus/${id}`,
+        {
+          foodStatus: status,
+        }
+      );
+
+      return { id, data: res.data };
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
 export const authorizeUser = createAsyncThunk(
   "authorizeUser",
   async (__, { rejectWithValue }) => {
@@ -500,6 +523,14 @@ const itemSlice = createSlice({
         const index = state.orderDetail.findIndex((order) => order._id === id);
         if (index !== -1) {
           state.orderDetail[index].foodStatus = data.foodStatus;
+        }
+      })
+      .addCase(updateTakeAwayStatus.fulfilled, (state, action) => {
+        state.loading = false;
+        const { id, data } = action.payload;
+        const index = state.orderDetail.findIndex((order) => order._id === id);
+        if (index !== -1) {
+          state.takeawayOrder[index].foodStatus = data.foodStatus;
         }
       });
   },
