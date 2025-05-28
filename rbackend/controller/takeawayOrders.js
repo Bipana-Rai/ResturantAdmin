@@ -117,5 +117,18 @@ router.get("/getTakeAway", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+ router.put("/updateTakeAwayStatus/:id", async (req, res) => {
+    const { id } = req.params;
+    const data = req.body;
+
+    try {
+      const takeaway = await takeawayModel.findByIdAndUpdate(id, data);
+      console.log(takeaway)
+      res.status(200).json(takeaway);
+    } catch (error) {
+      console.log(error)
+     res.status(500).json({ message: error.message });
+    }
+  });
 
 module.exports = router;
