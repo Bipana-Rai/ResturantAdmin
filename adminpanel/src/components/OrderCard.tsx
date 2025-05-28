@@ -1,4 +1,9 @@
-import { getDineIn, updateDineInStatus } from "@/features/items/itemSlice";
+import {
+  getDineIn,
+  getTakeAway,
+  updateDineInStatus,
+  updateTakeAwayStatus,
+} from "@/features/items/itemSlice";
 import { orderData } from "@/features/items/itemSlice";
 import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
@@ -8,9 +13,20 @@ interface OrderLineProps {
 
 function OrderCard({ data }: OrderLineProps) {
   const dispatch = useDispatch<AppDispatch>();
-  const handleStatusChange =async (id?: string, status?: string) => {
-   await dispatch(updateDineInStatus({ id, status: status }));
-    dispatch(getDineIn());
+  const handleStatusChange = async (
+    id?: string,
+    status?: string,
+    currentStatus?: string
+  ) => {
+    if (currentStatus === "dine In") {
+      await dispatch(updateDineInStatus({ id, status: status }));
+       dispatch(getDineIn());
+    } else {
+      await dispatch(updateTakeAwayStatus({ id, status: status }));
+      dispatch(getTakeAway())
+    }
+
+   
   };
   return (
     <div className="w-[340px] flex gap-2 flex-col justify-between shadow-[0_3px_10px_rgb(0,0,0,0.2)] py-3 bg-gray-50 px-4 border-1 border-gray-400 border-dashed">
@@ -49,7 +65,9 @@ function OrderCard({ data }: OrderLineProps) {
         <label htmlFor="">Status</label>
         <select
           value={data.foodStatus}
-          onChange={(e) => handleStatusChange(data._id, e.target.value)}
+          onChange={(e) =>
+            handleStatusChange(data._id, e.target.value, data.status)
+          }
           className=" border-1 border-gray-500 rounded-sm text-sm py-1 px-2"
         >
           <option value="waiting">Waiting</option>

@@ -3,8 +3,9 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 interface OrderLineProps {
   data: orderData;
+i:number
 }
-function OrderInfoCard({ data }: OrderLineProps) {
+function OrderInfoCard({ data,i }: OrderLineProps) {
   dayjs.extend(relativeTime);
   return (
     <>
@@ -12,8 +13,10 @@ function OrderInfoCard({ data }: OrderLineProps) {
         className={`h-[95px] w-[260px] shrink-0 py-1 px-5 rounded-md border-1  border-gray-500  cursor-pointer  1} `}
       >
         <div className="flex justify-between  ">
-          <p>Order#F27 </p>
-          <p>Table #{data.tableNumber}</p>
+          <p>Order #{i+1} </p>{
+            data.status==="dine In" &&  <p>Table #{data.tableNumber}</p>
+          }
+         
         </div>
         <p>Item : {data.cartItems.length}</p>
         <div className="flex justify-between items-center   ">
