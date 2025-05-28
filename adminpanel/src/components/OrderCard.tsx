@@ -1,4 +1,4 @@
-import { updateDineInStatus } from "@/features/items/itemSlice";
+import { getDineIn, updateDineInStatus } from "@/features/items/itemSlice";
 import { orderData } from "@/features/items/itemSlice";
 import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
@@ -11,6 +11,7 @@ function OrderCard({ data, setFilterData }: OrderLineProps) {
   const dispatch = useDispatch<AppDispatch>();
   const handleStatusChange = (id?: string, status?: string) => {
     dispatch(updateDineInStatus({ id, status: status }));
+    dispatch(getDineIn())
     setFilterData((prev) =>
       prev.map((order) =>
         order._id === id ? { ...order, foodStatus: status } : order
