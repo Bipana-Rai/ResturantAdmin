@@ -9,13 +9,7 @@ function OrderInfoCard({ data }: OrderLineProps) {
   return (
     <>
       <div
-        className={`h-[95px] w-[250px] shrink-0 py-1 px-3 bg-[#89e7ff] rounded-xl cursor-pointer  1 ${
-          data.foodStatus === "waiting"
-            ? "bg-red-200"
-            : data.foodStatus === "served"
-            ? "bg-green-200"
-            : "bg-blue-200"
-        } `}
+        className={`h-[95px] w-[260px] shrink-0 py-1 px-5 rounded-md border-1  border-gray-500  cursor-pointer  1} `}
       >
         <div className="flex justify-between  ">
           <p>Order#F27 </p>
@@ -25,7 +19,7 @@ function OrderInfoCard({ data }: OrderLineProps) {
         <div className="flex justify-between items-center   ">
           <p className="text-sm ">{dayjs(data.createdAt).fromNow()} </p>
           <div
-            className={`px-3  bg-[#066146] flex  text-gray-100 rounded-2xl text-sm py-1 ${
+            className={`px-3  bg-[#066146] flex  text-gray-100 rounded-md text-sm py-1 ${
               data.foodStatus === "waiting"
                 ? "bg-red-600"
                 : data.foodStatus === "served"
