@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TableDetailCard from "../components/TableDetailCard";
 import DashboardTable from "@/components/DashboardTable";
-import QRcode from "react-qr-code";
 import PaymentCard from "@/components/PaymentCard";
 
 function Dashboard() {
@@ -13,6 +12,7 @@ function Dashboard() {
   const [id, setId] = useState<string | undefined>();
   const [paymentWay, setPaymentWay] = useState("");
   const paymentData = orderDetail.find((e) => e._id === id);
+  const[showPayment,setShowPayment]=useState(false)
 
   useEffect(() => {
     dispatch(getDineIn());
@@ -20,15 +20,19 @@ function Dashboard() {
   return (
     <>
       {
+        showPayment && (
         <div className="h-[100vh] w-[100vw] z-30 fixed top-0 left-0 bg-[#00000083] backdrop-blur-md flex items-center justify-center">
           {paymentWay === "khalti" ? (
-            <PaymentCard method={"khalti"} />
+            <PaymentCard method={"khalti"} setShowPayment={setShowPayment} />
           ) : paymentWay === "esewa" ? (
-            <PaymentCard method={"esewa"} />
+            <PaymentCard method={"esewa"} setShowPayment={setShowPayment} />
           ) : (
-            <div></div>
+            <div>
+              {}
+            </div>
           )}
         </div>
+        )
       }
       <div className="grid lg:grid-cols-6 relative">
         <div className="col-span-4 px-2 py-2 overflow-y-auto">
@@ -38,7 +42,7 @@ function Dashboard() {
         {/* next col */}
         <div className="lg:col-span-2    bg-gray-300 mt-[-7px]    ">
           <div className=" sticky top-15 border-0 h-[89vh] px-3">
-            <TableDetailCard data={paymentData} setPaymentWay={setPaymentWay} />
+            <TableDetailCard data={paymentData} setPaymentWay={setPaymentWay} paymentWay={paymentWay} setShowPayment={setShowPayment} />
           </div>
         </div>
       </div>
