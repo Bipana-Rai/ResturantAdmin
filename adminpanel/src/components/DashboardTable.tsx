@@ -62,7 +62,6 @@ useEffect(() => {
     <>
       <form
         className="top-14 py-3 flex  px-10 w-[730px]  fixed bg-white "
-        
       >
         <input
           type="text"
