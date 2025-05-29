@@ -1,3 +1,4 @@
+import paymenthod from "@/data/paymethod";
 import { orderData } from "@/features/items/itemSlice";
 import { CiDesktopMouse2, CiEdit } from "react-icons/ci";
 import { FiPrinter } from "react-icons/fi";
@@ -6,29 +7,25 @@ import { TbReceiptDollar } from "react-icons/tb";
 
 interface OrderLineProps {
   data?: orderData;
-  setPaymentWay:(paymentWay:string)=>void
+  setPaymentWay: (paymentWay: string) => void;
+  setShowPayment: (showPayment: boolean) => void;
+  paymentWay: string;
 }
-function TableDetailCard({ data ,setPaymentWay}: OrderLineProps) {
-  const qrDataMap: Record<string, string> = {
-    esewa: "https://esewa.com.np/payment?merchantId=12345",
-    khalti: "https://khalti.com/payment/merchant/abc123",
-    fonepay: "https://fonepay.com/pay?id=999999",
+function TableDetailCard({
+  data,
+  paymentWay,
+  setPaymentWay,
+  setShowPayment,
+}: OrderLineProps) {
+  const handlePayment = () => {
+    if (!paymentWay) {
+      alert("choose payment method !!");
+    } else {
+      setShowPayment(true);
+    }
   };
-
   return (
     <>
- 
-      {/* <div className="mt-4 space-y-4">
-          <p>Select Bank to Pay:</p>
-          <div className="flex gap-4">
-            {Object.entries(qrDataMap).map(([bank, url]) => (
-              <div key={bank} className="text-center">
-                <QRCode value={url} size={100} />
-                <p className="capitalize mt-2">{bank}</p>
-              </div>
-            ))}
-          </div>
-           </div> */}
       {data ? (
         <>
           {" "}
@@ -89,44 +86,33 @@ function TableDetailCard({ data ,setPaymentWay}: OrderLineProps) {
             <div>
               <p className="text-lg px-3 font-semibold pb-2">Payment Method</p>
               <div className="flex  gap-1 px-4 flex-wrap  ">
-                <input
-                  type="radio"
-                  name="payment"
-                  onClick={(e) => setPaymentWay(e.currentTarget.value)}
-                  value="cash"
-                />
-                <div className=" border-1 flex items-center border-gray-400 rounded-md bg-gray-300 justify-center px-2 gap-2 ">
-                  <TbReceiptDollar className="text-green-700" />
-                  <p>Cash</p>
-                </div>
-                <input
-                  type="radio"
-                  name="payment"
-                  value="esewa"
-                  className="ms-2"
-                  onClick={(e) => setPaymentWay(e.currentTarget.value)}
-                />
-                <div className=" h-10  flex items-center   rounded-md w-20  relative bg-green-200  ">
-                  <img
-                    src="/esewa.png"
-                    alt=""
-                    className=" absolute object-contain pt-3 "
-                  />
-                </div>
-                <input
-                  type="radio"
-                  name="payment"
-                  value="khalti"
-                  className="ms-2"
-                  onClick={(e) => setPaymentWay(e.currentTarget.value)}
-                />
-                <div className=" h-10  flex items-center   bg-purple-200 rounded-md w-20  relative  ">
-                  <img
-                    src="/khalti.png"
-                    alt=""
-                    className=" absolute object-contain"
-                  />
-                </div>
+                {paymenthod.map((e) => (
+                  <>
+                    <input
+                      type="radio"
+                      name="payment"
+                      value={e.value}
+                      className="ms-1"
+                      onClick={(e) => setPaymentWay(e.currentTarget.value)}
+                    />
+                    {e.value === "cash" ? (
+                      <div className=" border-1 flex items-center border-gray-400 rounded-md bg-gray-100 justify-center px-2 gap-2 ">
+                        <TbReceiptDollar className="text-green-700" />
+                        <p>Cash</p>
+                      </div>
+                    ) : (
+                      <div
+                        className={` h-9  flex items-center   rounded-md w-20  relative  ${e.bg}  `}
+                      >
+                        <img
+                          src={e.img}
+                          alt=""
+                          className=" absolute object-contain px-2 "
+                        />
+                      </div>
+                    )}
+                  </>
+                ))}
               </div>
             </div>
             <div className="flex justify-between px-4   ">
@@ -134,7 +120,10 @@ function TableDetailCard({ data ,setPaymentWay}: OrderLineProps) {
                 <FiPrinter />
                 Print
               </div>
-              <div className="px-5 py-1 cursor-pointer flex items-center gap-2  text-sm bg-blue-500 text-white rounded-md">
+              <div
+                className="px-5 py-1 cursor-pointer flex items-center gap-2  text-sm bg-blue-500 text-white rounded-md"
+                onClick={handlePayment}
+              >
                 <CiDesktopMouse2 />
                 payment
               </div>
