@@ -50,7 +50,7 @@ function Navbar() {
             </div>
 
             <div className="flex items-center gap-2 pe-5">
-              <div className="h-10 bg-amber-500 w-10 rounded-[50%] overflow-hidden">
+              <div className="h-10  w-10 rounded-[50%] overflow-hidden">
                 <img
                   src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuJTIwZmFjZXxlbnwwfHwwfHx8MA%3D%3D"
                   alt=""
