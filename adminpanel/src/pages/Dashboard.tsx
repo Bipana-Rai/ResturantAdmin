@@ -9,7 +9,13 @@ import PaymentCard from "@/components/PaymentCard";
 function Dashboard() {
   const dispatch = useDispatch<AppDispatch>();
   const { orderDetail } = useSelector((state: RootState) => state.item);
-  const [id, setId] = useState<string | undefined>();
+  const [id, setId] = useState<string | undefined>(() => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("selectedOrderId") || undefined;
+  }
+  return undefined;
+});
+
   const [paymentWay, setPaymentWay] = useState("");
   const paymentData = orderDetail.find((e) => e._id === id);
   const[showPayment,setShowPayment]=useState(false)
@@ -17,6 +23,14 @@ function Dashboard() {
   useEffect(() => {
     dispatch(getDineIn());
   }, [dispatch]);
+  useEffect(() => {
+  if (orderDetail.length > 0 && !id) {
+    setId(orderDetail[0]._id);
+  }
+  if(id){
+    localStorage.setItem("selectedOrderId",id)
+  }
+}, [orderDetail, id]);
   return (
     <>
       {
