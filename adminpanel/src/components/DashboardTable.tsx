@@ -10,6 +10,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { orderData } from "@/features/items/itemSlice";
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -30,11 +32,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+interface DashboardProps{
+  setId:(id?:string)=>void
+}
 
-export default function DashboardTable() {
+export default function DashboardTable({setId}:DashboardProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { orderDetail } = useSelector((state: RootState) => state.item);
-  const [filterData, setFilterData] = useState([]);
+  const [filterData, setFilterData] = useState<orderData[]>([]);
   const [inputValue, setInputValue] = useState("");
 useEffect(() => {
   const searchData = orderDetail.filter(
@@ -92,19 +97,19 @@ useEffect(() => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filterData.map((row) => (
-              <StyledTableRow key={row._id}>
+            {filterData?.map((row) => (
+              <StyledTableRow key={row._id} sx={{cursor:"pointer", "&:hover":{backgroundColor:"#00000063"} }} onClick={()=>setId(row._id)}>
                 <StyledTableCell component="th" scope="row">
                   {row.tableNumber}
                 </StyledTableCell>
                 <StyledTableCell align="left">
                   {row.cartItems.map((e) => e.dishName).join(", ")}
                 </StyledTableCell>
-                <StyledTableCell align="left">
+                <StyledTableCell align="left" sx={{paddingX:5}}>
                   {row.cartItems.length}
                 </StyledTableCell>
-                <StyledTableCell align="left">
-                  ${row.totalAmount}
+                <StyledTableCell align="left" sx={{paddingX:5}}>
+                  ${row.totalAmount.toFixed(2)}
                 </StyledTableCell>
               </StyledTableRow>
             ))}
