@@ -5,7 +5,7 @@ const takeaway = new mongoose.Schema(
 
     tableNumber: {
       type: String,
-      require: true,
+      required: true,
     },
     cartItems: [
       {
@@ -21,7 +21,7 @@ const takeaway = new mongoose.Schema(
     },
     status: {
       type: String,
-      require: true,
+      required: true,
     },
     paymentDetails: {
       method: String,
