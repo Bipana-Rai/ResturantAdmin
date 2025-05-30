@@ -243,7 +243,7 @@ export const updateTakeAwayStatus = createAsyncThunk(
 
     { rejectWithValue }
   ) => {
-     console.log("ii",id,status)
+    console.log("ii", id, status);
     try {
       const res = await axios.put(
         `http://localhost:5000/api/updateTakeAwayStatus/${id}`,
@@ -271,6 +271,35 @@ export const authorizeUser = createAsyncThunk(
         return rejectWithValue("Unauthorized user role for admin app");
       }
       return response.data.user;
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+export const deleteDineInReceit = createAsyncThunk(
+  "deleteDineReceit",
+  async ({ id }: { id?: string }, { rejectWithValue }) => {
+    console.log(id);
+    try {
+      const res = await axios.delete(
+        `http://localhost:5000/api/deleteDineReceit/${id}`
+      );
+      return { id, data: res.data };
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+export const deleteTakeawayReceit = createAsyncThunk(
+  "deleteTakeawayReceit",
+  async ({ id }: { id?: string }, { rejectWithValue }) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:5000/api/deleteTakeawayReceit/${id}`
+      );
+      return { id, data: res.data };
     } catch (error) {
       const err = error as AppAxiosError;
       return rejectWithValue(err.response?.data || err.message);
@@ -532,6 +561,16 @@ const itemSlice = createSlice({
         if (index !== -1) {
           state.takeawayOrder[index].foodStatus = data.foodStatus;
         }
+      })
+      .addCase(deleteDineInReceit.fulfilled, (state, action) => {
+        state.loading = false;
+        const { id } = action.payload;
+        state.orderDetail = state.orderDetail.filter((e) => e._id !== id);
+      })
+         .addCase(deleteTakeawayReceit.fulfilled, (state, action) => {
+        state.loading = false;
+        const { id } = action.payload;
+        state.takeawayOrder = state.takeawayOrder.filter((e) => e._id !== id);
       });
   },
 });
