@@ -14,6 +14,7 @@ import ManageDishes from "./pages/ManageDishes";
 import ManageTables from "./pages/ManageTables";
 import OrderLine from "./pages/OrderLine";
 import { AppDispatch } from "./store/store";
+import { ToastContainer } from "react-toastify";
 
 const socket = io("http://localhost:5000", {
   withCredentials: true,
@@ -21,27 +22,24 @@ const socket = io("http://localhost:5000", {
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
-  
+
   useEffect(() => {
-   
     socket.on("newDineInOrder", (data) => {
       console.log("Received dine-in order via socket:", data);
       dispatch(addNotification(data));
-      dispatch(getDineIn())
-     
+      dispatch(getDineIn());
     });
     return () => {
       socket.off("newDineInOrder");
     };
   }, [dispatch]);
 
- 
-
   return (
     <>
+      <ToastContainer />
       <Routes>
         <Route element={<MainLayout />}>
-         {/* <Route element={<ProtectedRoute />}> */}
+          {/* <Route element={<ProtectedRoute />}> */}
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/orderline" element={<OrderLine />} />
           <Route path="/managedishes/all" element={<ManageDishes />} />
@@ -50,9 +48,8 @@ function App() {
           <Route path="/managebooking" element={<ManageBooking />} />
           <Route path="/notification" element={<Notification />} />
           <Route path="/singleData/:id" element={<SingleOrder />} />
-        {/* </Route> */}
-         </Route>
-        
+          {/* </Route> */}
+        </Route>
       </Routes>
     </>
   );
