@@ -1,12 +1,13 @@
 const express = require("express");
-require('dotenv').config()
+require("dotenv").config();
 const mongoose = require("mongoose");
 const addItems = require("./controller/addItems");
 const cartItem = require("./controller/cartItem");
 const tableItem = require("./controller/tableItem");
 const bookingItem = require("./controller/bookingItem");
-const takeawayOrders=require("./controller/takeawayOrders")
+const takeawayOrders = require("./controller/takeawayOrders");
 const authentication = require("./controller/authentication");
+const receit = require("./controller/receits");
 const cors = require("cors");
 const path = require("path");
 const http = require("http"); //using server http so that it can support socket
@@ -70,8 +71,9 @@ app.use("/api", tableItem);
 app.use("/api", bookingItem);
 app.use("/api", authentication);
 app.use("/api", takeawayOrders);
+app.use("/api", receit);
 
-const orderItems = require("./controller/orderItems")(io)//io lae ordercontroller ma pass gareko
+const orderItems = require("./controller/orderItems")(io); //io lae ordercontroller ma pass gareko
 app.use("/api", orderItems);
 
 server.listen(5000, () => {
