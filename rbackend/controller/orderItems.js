@@ -17,19 +17,19 @@ module.exports = function (io) {
         totalAmount: saveData.totalAmount,
         user: saveData.user,
         status: saveData.status,
-        _id:saveData._id
+        _id: saveData._id,
       });
       res.status(200).json(saveData);
     } catch (error) {
-     res.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message });
     }
   });
   router.get("/getDineIn", async (req, res) => {
     try {
-      const dineOrder = await DineInModel.find().sort({createdAt: -1 });
+      const dineOrder = await DineInModel.find().sort({ createdAt: -1 });
       res.status(200).json(dineOrder);
     } catch (error) {
-     res.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message });
     }
   });
   router.put("/updateDineInStatus/:id", async (req, res) => {
@@ -39,7 +39,16 @@ module.exports = function (io) {
       const dineOrder = await DineInModel.findByIdAndUpdate(id, data);
       res.status(200).json(dineOrder);
     } catch (error) {
-     res.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message });
+    }
+  });
+  router.delete("/deleteDineReceit/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+      const deleteData = await DineInModel.findByIdAndDelete( id );
+      res.status(200).json(deleteData);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
   });
   return router;
