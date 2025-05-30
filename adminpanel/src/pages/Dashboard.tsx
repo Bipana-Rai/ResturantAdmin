@@ -50,7 +50,7 @@ function Dashboard() {
       }
       <div className="grid lg:grid-cols-6 relative">
         <div className="col-span-4 px-2 py-2 overflow-y-auto">
-          <DashboardTable setId={setId} />
+          <DashboardTable setId={setId} id={id} />
         </div>
 
         {/* next col */}
