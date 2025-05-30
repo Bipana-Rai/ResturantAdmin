@@ -23,20 +23,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
+
 interface DashboardProps{
   setId:(id?:string)=>void
+  id?:string
 }
 
-export default function DashboardTable({setId}:DashboardProps) {
+export default function DashboardTable({setId,id}:DashboardProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { orderDetail } = useSelector((state: RootState) => state.item);
   const [filterData, setFilterData] = useState<orderData[]>([]);
@@ -97,7 +90,10 @@ useEffect(() => {
           </TableHead>
           <TableBody>
             {filterData?.map((row) => (
-              <StyledTableRow key={row._id} sx={{cursor:"pointer", "&:hover":{backgroundColor:"#00000063"} }} onClick={()=>setId(row._id)}>
+              <TableRow key={row._id}
+              
+                sx={{cursor:"pointer",
+               backgroundColor: row._id === id ? "#00000020" : "inherit", "&:hover":{backgroundColor:"#00000020"} }} onClick={()=>setId(row._id)}>
                 <StyledTableCell component="th" scope="row">
                   {row.tableNumber}
                 </StyledTableCell>
@@ -110,7 +106,7 @@ useEffect(() => {
                 <StyledTableCell align="left" sx={{paddingX:5}}>
                   ${row.totalAmount.toFixed(2)}
                 </StyledTableCell>
-              </StyledTableRow>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
