@@ -2,7 +2,6 @@ import { clearUnreadCount } from "@/features/items/notificationSlice";
 import { RootState } from "@/store/store";
 import { CiBellOn } from "react-icons/ci";
 import { FaBowlFood } from "react-icons/fa6";
-import { IoSearchOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -28,14 +27,7 @@ function Navbar() {
               <p className="text-gray-600 font-semibold">Station</p>
             </div>
           </div>
-          <div className=" flex border-1 border-gray-300 px-3 py-1 rounded-md items-center w-80 gap-3">
-            <IoSearchOutline />
-            <input
-              type="text"
-              className=" outline-0 w-full "
-              placeholder="search menu,order and more..."
-            />
-          </div>
+        
           <div className="flex items-center gap-5">
             <div
               className="h-10 w-10 border-1 border-gray-400 cursor-pointer rounded-full  flex items-center relative justify-center"
