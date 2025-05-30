@@ -3,7 +3,6 @@ const receitsModel = require("../models/receitsModel");
 const router = express.Router();
 router.post("/receits", async (req, res) => {
   const data = req.body;
-  console.log(data);
   try {
     const receit = new receitsModel({
       tableNumber: data.tableNumber,
