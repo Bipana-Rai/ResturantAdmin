@@ -1,5 +1,6 @@
 import paymenthod from "@/data/paymethod";
 import { orderData } from "@/features/items/itemSlice";
+import axios from "axios";
 import { CiDesktopMouse2, CiEdit } from "react-icons/ci";
 import { FiPrinter } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
@@ -24,6 +25,26 @@ function TableDetailCard({
       setShowPayment(true);
     }
   };
+  const handleDonePayment=async()=>{
+    try {
+      const payload={
+        tableNumber:data?.tableNumber,
+        cartItems:data?.cartItems,
+        totalAmount:data?.totalAmount,
+       paymentMethod: paymentWay,
+       status:"paid",
+       paidAt:new Date().toISOString()
+
+      }
+      console.log("pay",payload)
+     await axios.post("http://localhost:5000/api/receits",payload)
+      alert("Payment successful and order saved!");
+    } catch (error) {
+       console.error("Error saving order:", error);
+      alert("An error occurred while saving the order.");
+    }
+
+  }
   return (
     <>
       
@@ -119,12 +140,13 @@ function TableDetailCard({
             Print
           </div>
           <div
-            className="px-5 py-1 cursor-pointer flex items-center gap-2  text-sm bg-blue-500 text-white rounded-md"
+            className="px-4 py-1 cursor-pointer flex items-center gap-2  text-sm bg-blue-500 text-white rounded-md"
             onClick={handlePayment}
           >
             <CiDesktopMouse2 />
             payment
           </div>
+          <div className="px-8   py-1 cursor-pointer flex items-center gap-2  text-sm bg-blue-500 text-white rounded-md" onClick={handleDonePayment}>Done</div>
         </div>
       </div>
     </>
