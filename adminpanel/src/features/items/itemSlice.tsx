@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 
-type AppAxiosError = AxiosError<{ message: string }>;
+export type AppAxiosError = AxiosError<{ message: string }>;
 export const addCategory = createAsyncThunk(
   "addCategory",
   async (formData: FormData, { rejectWithValue }) => {
@@ -267,9 +267,6 @@ export const authorizeUser = createAsyncThunk(
         "http://localhost:5000/api/admin/verify",
         { withCredentials: true }
       );
-      if (response.data.user !== "admin") {
-        return rejectWithValue("Unauthorized user role for admin app");
-      }
       return response.data.user;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -306,9 +303,60 @@ export const deleteTakeawayReceit = createAsyncThunk(
     }
   }
 );
+export const signupDetail = createAsyncThunk(
+  "signupDetail",
+  async (data: { data: signupData }, { rejectWithValue }) => {
+    const finaldata = data.data;
+    console.log("slice", finaldata);
+    try {
+      const res = await axios.post(
+        `http://localhost:5000/api/signupData`,
+        finaldata
+      );
+
+      return res.data;
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+export const loginData = createAsyncThunk(
+  "loginData",
+  async ({ data }: { data: formdata }, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/loginData",
+        data,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log("token", res.data);
+      return res.data;
+    } catch (error) {
+      const err = error as AppAxiosError;
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
+
+
 interface Category {
   category: string;
   image?: string;
+}
+export interface signupData {
+  email: string;
+  password: string;
+  fullName: string;
+  phone: string;
+  role: string;
+}
+export interface formdata {
+  email: string;
+  password: string;
 }
 interface Dishes {
   dishName: string;
@@ -375,6 +423,7 @@ interface CategoryState {
   bookingDetail: BookedData[];
   user: userInfo | null;
   takeawayOrder: orderData[];
+
 }
 
 const initialState: CategoryState = {
