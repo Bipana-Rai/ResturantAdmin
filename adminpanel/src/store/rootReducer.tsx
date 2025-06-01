@@ -4,6 +4,7 @@ import notificationReducer from "../features/items/notificationSlice";
 const rootReducer = combineReducers({
   item: itemReducer,
   notification: notificationReducer,
+  
 });
 
 export default rootReducer;
