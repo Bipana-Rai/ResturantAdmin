@@ -8,7 +8,7 @@ import rootReducer from "./rootReducer";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["notification"], // only persist this slice
+  whitelist: ["notification","item"], // only persist this slice
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
