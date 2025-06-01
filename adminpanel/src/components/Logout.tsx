@@ -5,12 +5,14 @@ import { motion } from "framer-motion";
 import { ImCross } from "react-icons/im";
 import { IoMdLogOut } from "react-icons/io";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 interface sidebarProps {
   setLogout: (logout: boolean) => void;
 }
 
 function Logout({ setLogout }: sidebarProps) {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate=useNavigate()
  
   const handleLogout = async () => {
     try {
@@ -20,7 +22,8 @@ function Logout({ setLogout }: sidebarProps) {
         { withCredentials: true }
       );
       dispatch(logoutUser());
-      window.location.replace("http://localhost:5174");
+      navigate("/")
+      
     } catch (error) {
       console.error("Logout failed:", error);
     }
