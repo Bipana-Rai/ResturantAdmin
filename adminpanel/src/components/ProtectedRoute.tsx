@@ -1,28 +1,15 @@
-
-import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Navigate, Outlet } from "react-router-dom";
 
 function ProtectedRoute() {
   const { user } = useSelector((state: RootState) => state.item);
-
-console.log("user",user)
-
-    if (user === undefined) {
-      // still loading user info, do nothing yet
-      return;
-    }
-
-    // if (!user) {
-    //   // Not logged in, redirect to customer app home (login)
-    //   window.location.replace("http://localhost:5174");
-    //   return;
-    // }
-  if (user?.role === "admin") {
-    return <Outlet />;
+  console.log("----", user);
+  if (user === undefined) {
+    return null; // or a loading spinner
   }
 
-  return null;
+  return user?.role==="admin" ? <Outlet /> : <Navigate to="/" replace />;
 }
 
 export default ProtectedRoute;
