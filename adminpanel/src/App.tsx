@@ -15,6 +15,8 @@ import ManageTables from "./pages/ManageTables";
 import OrderLine from "./pages/OrderLine";
 import { AppDispatch } from "./store/store";
 import { ToastContainer } from "react-toastify";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Authentication from "./components/Aurhentication";
 
 const socket = io("http://localhost:5000", {
   withCredentials: true,
@@ -37,9 +39,11 @@ function App() {
   return (
     <>
       <ToastContainer />
+
       <Routes>
+        <Route path="/" element={<Authentication/>}/>
         <Route element={<MainLayout />}>
-          {/* <Route element={<ProtectedRoute />}> */}
+          <Route element={<ProtectedRoute />}>
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/orderline" element={<OrderLine />} />
           <Route path="/managedishes/all" element={<ManageDishes />} />
@@ -48,7 +52,7 @@ function App() {
           <Route path="/managebooking" element={<ManageBooking />} />
           <Route path="/notification" element={<Notification />} />
           <Route path="/singleData/:id" element={<SingleOrder />} />
-          {/* </Route> */}
+          </Route>
         </Route>
       </Routes>
     </>
