@@ -15,7 +15,7 @@ const esewaConfig = {
 };
 
 router.post("/takeaway", async (req, res) => {
-  const { name, number, cartItems, totalAmount, status, takeAwayStatus } =
+  const { name, number, cartItems, totalAmount, status, takeAwayStatus ,foodStatus} =
     req.body;
   console.log("take", req.body);
   console.log("byee");
@@ -31,6 +31,7 @@ router.post("/takeaway", async (req, res) => {
       totalAmount,
       status,
       takeAwayStatus,
+      foodStatus
     });
 
     // Save order to database
