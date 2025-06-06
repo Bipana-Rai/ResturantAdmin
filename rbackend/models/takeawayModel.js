@@ -3,10 +3,6 @@ const takeaway = new mongoose.Schema(
   {
     orderId: { type: String, required: true, unique: true },
 
-    tableNumber: {
-      type: String,
-      required: true,
-    },
     cartItems: [
       {
         dishName: { type: String, required: true },
