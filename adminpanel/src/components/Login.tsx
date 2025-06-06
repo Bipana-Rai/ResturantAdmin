@@ -36,18 +36,15 @@ function Login({ setShowLogin, showLogin, setLoading }: authenticationProps) {
   const onSubmit = async (data: formdata) => {
     setLoading(true);
     try {
-     const loggedInUser = await dispatch(loginData({ data })).unwrap();
-    dispatch(authorizeUser());
-    console.log("log",user)
+      await dispatch(loginData({ data })).unwrap();
+      dispatch(authorizeUser());
+      console.log("log", user);
 
-    if (loggedInUser?.role !== "admin") {
+      if (user?.role !== "admin") {
         toast.error("Access denied: Not an admin");
-      
-    } else {
+      } else {
         toast.success("LogIn successfully");
-      
-    }
-    
+      }
     } catch (error) {
       const err = error as AppAxiosError;
       if (err.response?.status === 403 && err.response?.data?.message) {
