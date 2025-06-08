@@ -1,54 +1,103 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Restaurant Admin Panel
 
-Currently, two official plugins are available:
+A full-featured restaurant admin dashboard built with Next.js and Redux Toolkit. This panel allows restaurant staff to manage dine-in and takeaway orders, monitor order status, and perform administrative tasks such as user authentication and role-based access control.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<!-- ## 🌐 Live Demo
 
-## Expanding the ESLint configuration
+> _(Add your deployed URL here if available)_ -->
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ⚙️ Tech Stack
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **Frontend**: Next.js, React
+- **State Management**: Redux Toolkit
+- **Backend**: Node.js, Express.js (in `/backend`)
+- **Styling**: Tailwind CSS
+- **Others**: Axios, MUI (Material UI)
+
+## 📦 Features
+
+- 🔐 Secure login with admin verification
+- 📋 View and filter Dine-In & Takeaway orders
+- 🚦 Real-time food status updates (e.g., "Pending", "Cooking", "Ready")
+- 📦 Order details via `OrderInfoCard`
+- 🗂 Organized UI with tab filtering (All, Pending, etc.)
+- 👨‍🍳 Admin-only protected routes via JWT and role-based checks
+
+## 📁 Folder Structure
+
+```
+adminpanel/
+├── components/       # Reusable UI components
+├── features/         # Redux slices and async thunks
+├── pages/            # Next.js pages (Home, Login, etc.)
+├── public/           # Static assets
+├── styles/           # Tailwind CSS & global styles
+└── utils/            # Axios and helper functions
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or newer)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Bipana-Rai/ResturantAdmin.git
+   cd ResturantAdmin/adminpanel
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env.local` file:
+
+   ```env
+   NEXT_PUBLIC_API_BASE_URL=http://localhost:5000/api
+   ```
+
+4. Run the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Visit [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 🔒 Admin Access
+
+To access admin-only features, you must log in with an account that has the `"admin"` role. Admin verification is done via JWT through a protected route:
 
 ```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+GET /admin/verify
 ```
+
+Make sure your backend returns a valid `user.role = "admin"` in the decoded JWT.
+
+---
+
+## 🛠 Backend
+
+The backend code (API, authentication, database) is assumed to be in the `/backend` folder. Ensure it’s running in parallel with the frontend for full functionality.
+
+---
+
+## 🙌 Acknowledgements
+
+Built and maintained by [Bipana Rai](https://github.com/Bipana-Rai)
+
+---
+
+## 📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).
