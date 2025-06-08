@@ -91,6 +91,8 @@ Make sure your backend returns a valid `user.role = "admin"` in the decoded JWT.
 The backend code (API, authentication, database) is assumed to be in the `/backend` folder. Ensure it’s running in parallel with the frontend for full functionality.
 
 ---
+## 📸 Screenshots
+### 🏠 Dashboard
 
 ## 🙌 Acknowledgements
 
