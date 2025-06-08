@@ -17,6 +17,8 @@ import { AppDispatch } from "./store/store";
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Authentication from "./components/Aurhentication";
+import ForgotPasswprd from "./components/ForgotPasswprd";
+import ResetPassword from "./components/ResetPassword";
 
 const socket = io("http://localhost:5000", {
   withCredentials: true,
@@ -42,6 +44,8 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Authentication/>}/>
+         <Route path="/recoverypassword" element={<ForgotPasswprd />} />
+        <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
         <Route element={<MainLayout />}>
           <Route element={<ProtectedRoute />}>
           <Route path="/admin/dashboard" element={<Dashboard />} />
