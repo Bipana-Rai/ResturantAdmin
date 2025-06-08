@@ -54,8 +54,8 @@ function AddDishes({ setIsShowDishes }: ManageDishes) {
     }
   },[category,setValue])
   return (
-    <div className="fixed top-0 h-screen backdrop-blur-[2px] bg-[#0000006e] w-screen flex items-center justify-center  ">
-      <div className="anime h-[420px] w-[500px] flex flex-col  justify-between relative  py-2 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.5)] px-8  bg-white">
+    <div className="fixed top-5 h-screen backdrop-blur-[2px] bg-[#0000006e] w-screen flex items-center justify-center  ">
+      <div className="anime w-[500px]  flex flex-col  justify-between relative  py-2 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.5)] px-8  bg-white">
         <div
           className="right-4  absolute cursor-pointer"
           onClick={() => setIsShowDishes(false)}
@@ -85,7 +85,7 @@ function AddDishes({ setIsShowDishes }: ManageDishes) {
               />
             </div>
           </div>
-          <div>
+          <div className="py-1">
             <label className="text-lg font-semibold">Category: </label>
             <input
               readOnly
@@ -94,10 +94,10 @@ function AddDishes({ setIsShowDishes }: ManageDishes) {
             />
             
           </div>
-          <div className="flex flex-col gap-1 ">
+          <div className="flex flex-col py-1  ">
               <label
                 htmlFor=""
-                className="text-lg  text-gray-800 font-semibold "
+                className="text-md  text-gray-800 font-semibold "
               >
                 Dish Name
               </label>
@@ -107,16 +107,16 @@ function AddDishes({ setIsShowDishes }: ManageDishes) {
                 placeholder="Enter dishes name"
                 {...register("dishName", { required: "true" })}
               />
-              {errors.dishName && errors.dishName.type === "requires" && (
-                <span className="text-red-600">Enter Dish name</span>
+              {errors.dishName && errors.dishName.type === "required" && (
+                <span className="text-red-600 text-sm font-bold ">Enter Dish name...</span>
               )}
             </div>
 
-          <div className="flex flex-col pb-3 h-full w-full  gap-3">
-            <div className="flex flex-col gap-1 ">
+          <div className="flex flex-col py-1  h-full w-full  gap-3">
+            <div className="flex flex-col ">
               <label
                 htmlFor=""
-                className="text-lg  text-gray-800 font-semibold "
+                className="text-md  text-gray-800 font-semibold "
               >
                 Dish Discription
               </label>
@@ -126,13 +126,13 @@ function AddDishes({ setIsShowDishes }: ManageDishes) {
                 placeholder="Enter dishes Discreiption"
                 {...register("dishDiscription", { required: "true" })}
               />
-              {errors.dishDiscription && errors.dishDiscription.type === "requires" && (
-                <span className="text-red-600">Enter Dish name</span>
+              {errors.dishDiscription && errors.dishDiscription.type === "required" && (
+                <span className="text-red-600 text-sm font-bold">Enter Dish name...</span>
               )}
             </div>
        
-            <div className="flex flex-col text-gray-800  gap-1 ">
-              <label htmlFor="" className="text-lg font-semibold ">
+            <div className="flex flex-col text-gray-800   ">
+              <label htmlFor="" className="text-md font-semibold ">
                 Price$
               </label>
               <input
@@ -142,7 +142,7 @@ function AddDishes({ setIsShowDishes }: ManageDishes) {
                 {...register("dishPrice", { required: "true" })}
               />
               {errors.dishPrice && errors.dishPrice.type === "required" && (
-                <span className="text-red-500">Enter price of dish</span>
+                <span className="text-red-500 text-sm font-bold">Enter price of dish..</span>
               )}
             </div>
             <button
