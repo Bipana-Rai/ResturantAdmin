@@ -93,6 +93,24 @@ The backend code (API, authentication, database) is assumed to be in the `/backe
 ---
 ## 📸 Screenshots
 ### 🏠 Dashboard
+![Dashboard](https://github.com/Bipana-Rai/ResturantAdmin/blob/main/screenshot/Screenshot%202025-06-08%20191559.png
+)
+###  Order Line
+![Order Line](https://github.com/Bipana-Rai/ResturantAdmin/blob/main/screenshot/Screenshot%202025-06-08%20191623.png)
+
+###  Manage Dishesh
+![Manage Dishesh](https://github.com/Bipana-Rai/ResturantAdmin/blob/main/screenshot/Screenshot%202025-06-08%20191701.png)
+
+###  Manage table
+![Manage table](https://github.com/Bipana-Rai/ResturantAdmin/blob/main/screenshot/Screenshot%202025-06-08%20191740.png)
+
+###  Manage booking
+![Manage booking](https://github.com/Bipana-Rai/ResturantAdmin/blob/main/screenshot/Screenshot%202025-06-08%20191834.png)
+
+###  Manage notification
+![Manage notification](https://github.com/Bipana-Rai/ResturantAdmin/blob/main/screenshot/Screenshot%202025-06-08%20191854.png)
+
+
 
 ## 🙌 Acknowledgements
 
