@@ -1,5 +1,6 @@
+import { authorizeUser } from "@/features/items/itemSlice";
 import { clearUnreadCount } from "@/features/items/notificationSlice";
-import { RootState } from "@/store/store";
+import { AppDispatch, RootState } from "@/store/store";
 import { CiBellOn } from "react-icons/ci";
 import { FaBowlFood } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,11 +9,15 @@ import { useNavigate } from "react-router-dom";
 function Navbar() {
   const navigate = useNavigate();
   const { unreadCount } = useSelector((state:RootState) => state.notification);
-  const dispatch = useDispatch();
+
+  const {user} = useSelector((state: RootState) => state.item);
+  const dispatch = useDispatch<AppDispatch>();
   const handleNotificationsViewed = () => {
     navigate("/notification");
     dispatch(clearUnreadCount());
+    dispatch(authorizeUser())
   };
+  console.log(user)
 
   return (
     <>
@@ -42,14 +47,11 @@ function Navbar() {
             </div>
 
             <div className="flex items-center gap-2 pe-5">
-              <div className="h-10  w-10 rounded-[50%] overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuJTIwZmFjZXxlbnwwfHwwfHx8MA%3D%3D"
-                  alt=""
-                  className="object-cover "
-                />
+              <div className="h-10  w-10 rounded-[50%] overflow-hidden border-1 border-gray-400 flex items-center justify-center">
+              <p className="text-2xl font-semibold text-black ">{user?.fullName.charAt(0)}</p>  
+               
               </div>
-              <p>Taylor swift</p>
+              <p>{user?.fullName}</p>
             </div>
           </div>
         </div>
