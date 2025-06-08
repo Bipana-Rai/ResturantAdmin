@@ -29,6 +29,8 @@ function ManageTables() {
 
   return (
     <>
+    <title>Manage Table</title>
+   
       {show && <TableForm setShow={setShow} />}
       {showEdit && <EditTableForm setShowEdit={setShowEdit} id={id} />}     
       <div className="px-5">

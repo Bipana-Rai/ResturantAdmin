@@ -13,6 +13,8 @@ function ManageDishes() {
 
   return (
     <>
+    <title>Manage Dishesh</title>
+     
       <div className="grid  lg:grid-cols-7 relative">
         <div className="col-span-2 h-[83vh] bg-gray-100 sticky top-14  ">
           <DisheshCategogy

@@ -33,6 +33,8 @@ function Dashboard() {
 }, [orderDetail, id]);
   return (
     <>
+    <title>Admin-dashboard</title>
+     
       {
         showPayment && (
         <div className="h-[100vh] w-[100vw] z-30 fixed top-0 left-0 bg-[#00000083] backdrop-blur-md flex items-center justify-center">

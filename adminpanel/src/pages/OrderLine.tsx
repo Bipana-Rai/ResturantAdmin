@@ -33,6 +33,11 @@ function OrderLine() {
 
   return (
     <>
+         <head>
+        <title>Order Line</title>
+  
+      </head>
+
       <div className="flex fixed w-[82vw]  bg-white justify-between px-8 pt-3 border-b-1  items-center pb-2 border-gray-300 ">
         <p className="text-xl font-semibold font-serif">Order Items</p>
         <div className="flex  gap-10">

@@ -8,12 +8,16 @@ import {
 } from "@/features/items/itemSlice";
 import { AppDispatch } from "@/store/store";
 import axios from "axios";
+import { useRef } from "react";
 import { CiDesktopMouse2, CiEdit } from "react-icons/ci";
 import { FiPrinter } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbReceiptDollar } from "react-icons/tb";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { useReactToPrint } from "react-to-print";
+
+import ReceiptPrint from "./ReceitPrint";
 
 interface OrderLineProps {
   data?: orderData;
@@ -28,6 +32,13 @@ function TableDetailCard({
   setShowPayment,
 }: OrderLineProps) {
   const dispatch = useDispatch<AppDispatch>();
+ const printRef = useRef<HTMLDivElement>(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current, // ✅ This is correct
+    documentTitle: "Order Receipt",
+  });
+
   const handlePayment = () => {
     if (!paymentWay) {
       alert("choose payment method !!");
@@ -37,31 +48,32 @@ function TableDetailCard({
     }
   };
   const handleDonePayment = async () => {
-    if(data){
-    try {
-      if (!paymentWay) return alert("choose payment method !!");
-      const payload = {
-        tableNumber: data?.tableNumber,
-        cartItems: data?.cartItems,
-        totalAmount: data?.totalAmount,
-        paymentMethod: paymentWay,
-        status: "paid",
-        paidAt: new Date().toISOString(),
-      };
-      await axios.post("http://localhost:5000/api/receits", payload);
-      toast.success("Payment completed and order saved!");
-      if (data?.status === "dine In") {
-        dispatch(deleteDineInReceit({ id: data?._id }));
-      } else {
-        dispatch(deleteTakeawayReceit({ id: data?._id }));
+    if (data) {
+      try {
+        if (!paymentWay) return alert("choose payment method !!");
+        const payload = {
+          tableNumber: data?.tableNumber,
+          cartItems: data?.cartItems,
+          totalAmount: data?.totalAmount,
+          paymentMethod: paymentWay,
+          status: "paid",
+          paidAt: new Date().toISOString(),
+        };
+        await axios.post("http://localhost:5000/api/receits", payload);
+        toast.success("Payment completed and order saved!");
+        if (data?.status === "dine In") {
+          dispatch(deleteDineInReceit({ id: data?._id }));
+        } else {
+          dispatch(deleteTakeawayReceit({ id: data?._id }));
+        }
+        dispatch(getDineIn());
+        dispatch(getTakeAway());
+      } catch (error) {
+        console.error("Error saving order:", error);
       }
-      dispatch(getDineIn());
-      dispatch(getTakeAway());
-    } catch (error) {
-      console.error("Error saving order:", error);
     }
-  }
   };
+
   return (
     <>
       <div className="bg-white flex flex-col justify-between rounded-md h-[64vh] ">
@@ -151,7 +163,10 @@ function TableDetailCard({
           </div>
         </div>
         <div className="flex justify-between px-4   ">
-          <div className="px-5 flex items-center gap-2 py-2 text-sm border-1  border-gray-300 rounded-md">
+          <div
+            className="px-5 flex items-center gap-2 py-2 text-sm border-1  border-gray-300 rounded-md"
+            onClick={handlePrint}
+          >
             <FiPrinter />
             Print
           </div>
@@ -169,6 +184,9 @@ function TableDetailCard({
             Done
           </div>
         </div>
+      </div>
+      <div style={{ display: "none" }}>
+        <ReceiptPrint ref={printRef} data={data} />
       </div>
     </>
   );

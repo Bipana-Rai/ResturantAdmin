@@ -27,6 +27,8 @@ function ManageBooking() {
 
   return (
     <>
+    <title>Manage Booking</title>
+    
       {showEditBookingForm && (
         <div className="h-[100vh] top-0 left-0 bg-[#0000005d] w-[100vw] fixed  z-20 flex items-center justify-center">
           <EditBookingForm

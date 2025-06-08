@@ -37,10 +37,9 @@ function Login({ setShowLogin, showLogin, setLoading }: authenticationProps) {
     setLoading(true);
     try {
       await dispatch(loginData({ data })).unwrap();
-      dispatch(authorizeUser());
-      console.log("log", user);
-
-      if (user?.role !== "admin") {
+      // Wait for authorizeUser to complete and return the user data
+      const authorized = await dispatch(authorizeUser()).unwrap();
+      if (authorized?.role !== "admin") {
         toast.error("Access denied: Not an admin");
       } else {
         toast.success("LogIn successfully");
