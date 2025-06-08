@@ -21,6 +21,7 @@ function Notification() {
 
   return (
     <>
+    <title>notification</title>
       <div className="fixed border-b py-4 w-full border-gray-300 bg-gray-50 z-20">
         <p className="text-2xl px-8 font-semibold">Notification</p>
       </div>
