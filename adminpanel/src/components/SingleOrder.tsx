@@ -19,7 +19,7 @@ function SingleOrder() {
   return (
     <div className="w-full h-screen flex items-center justify-center">
        {filterData.map((order) => (
-        <OrderCard key={order._id} data={order} setFilterData={setFilterData} />
+        <OrderCard key={order._id} data={order}/>
       ))}
     </div>
   );
