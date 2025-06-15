@@ -8,16 +8,12 @@ import {
 } from "@/features/items/itemSlice";
 import { AppDispatch } from "@/store/store";
 import axios from "axios";
-import { useRef } from "react";
 import { CiDesktopMouse2, CiEdit } from "react-icons/ci";
 import { FiPrinter } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbReceiptDollar } from "react-icons/tb";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { useReactToPrint } from "react-to-print";
-
-import ReceiptPrint from "./ReceitPrint";
 
 interface OrderLineProps {
   data?: orderData;
@@ -32,12 +28,6 @@ function TableDetailCard({
   setShowPayment,
 }: OrderLineProps) {
   const dispatch = useDispatch<AppDispatch>();
- const printRef = useRef<HTMLDivElement>(null);
-
-  const handlePrint = useReactToPrint({
-    content: () => printRef.current, // ✅ This is correct
-    documentTitle: "Order Receipt",
-  });
 
   const handlePayment = () => {
     if (!paymentWay) {
@@ -163,10 +153,7 @@ function TableDetailCard({
           </div>
         </div>
         <div className="flex justify-between px-4   ">
-          <div
-            className="px-5 flex items-center gap-2 py-2 text-sm border-1  border-gray-300 rounded-md"
-            onClick={handlePrint}
-          >
+          <div className="px-5 flex items-center gap-2 py-2 text-sm border-1  border-gray-300 rounded-md">
             <FiPrinter />
             Print
           </div>
@@ -184,9 +171,6 @@ function TableDetailCard({
             Done
           </div>
         </div>
-      </div>
-      <div style={{ display: "none" }}>
-        <ReceiptPrint ref={printRef} data={data} />
       </div>
     </>
   );
