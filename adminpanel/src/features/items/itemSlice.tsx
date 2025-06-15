@@ -7,7 +7,7 @@ export const addCategory = createAsyncThunk(
   async (formData: FormData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/addCategory",
+        "https://resturantbackend-rwdm.onrender.com/api/addCategory",
         formData,
         {
           headers: {
@@ -28,7 +28,7 @@ export const getCategory = createAsyncThunk(
   "getcategory",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://localhost:5000/api/getCategory");
+      const response = await axios.get("https://resturantbackend-rwdm.onrender.com/api/getCategory");
 
       return response.data;
     } catch (error) {
@@ -42,7 +42,7 @@ export const addDishes = createAsyncThunk(
   async (data: FormData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/addDish",
+        "https://resturantbackend-rwdm.onrender.com/api/addDish",
         data,
         {
           headers: {
@@ -62,7 +62,7 @@ export const getDishes = createAsyncThunk(
   "getDishes",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://localhost:5000/api/getDish");
+      const response = await axios.get("https://resturantbackend-rwdm.onrender.com/api/getDish");
       return response.data;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -74,7 +74,7 @@ export const addTable = createAsyncThunk(
   "addTable",
   async (data: TableData, { rejectWithValue }) => {
     try {
-      const res = await axios.post("http://localhost:5000/api/addTable", data);
+      const res = await axios.post("https://resturantbackend-rwdm.onrender.com/api/addTable", data);
       return res.data;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -86,7 +86,7 @@ export const getTable = createAsyncThunk(
   "getTable",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://localhost:5000/api/getTable");
+      const response = await axios.get("https://resturantbackend-rwdm.onrender.com/api/getTable");
       return response.data;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -108,14 +108,14 @@ export const editTableData = createAsyncThunk(
       if (updatedStatus) {
         console.log(updatedStatus);
         const response = await axios.put(
-          `http://localhost:5000/api/updateStatus/${id}`,
+          `https://resturantbackend-rwdm.onrender.com/api/updateStatus/${id}`,
           { ...(updatedStatus && { tableStatus: updatedStatus }) }
         );
         return { id, tableStatus: updatedStatus, data: response.data };
       }
 
       const response = await axios.put(
-        `http://localhost:5000/api/editTable/${id}`,
+        `https://resturantbackend-rwdm.onrender.com/api/editTable/${id}`,
         data
       );
       console.log(response.data);
@@ -132,7 +132,7 @@ export const deleteTableData = createAsyncThunk(
     console.log(id);
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/deleteTable/${id}`
+        `https://resturantbackend-rwdm.onrender.com/api/deleteTable/${id}`
       );
 
       return { id, data: response.data };
@@ -146,7 +146,7 @@ export const getBookingDetail = createAsyncThunk(
   "getBookingDetail",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get("http://localhost:5000/api/getBookingDetail");
+      const res = await axios.get("https://resturantbackend-rwdm.onrender.com/api/getBookingDetail");
       return res.data;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -163,7 +163,7 @@ export const editBookingDetail = createAsyncThunk(
     console.log(id, data, status);
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/editBookingDetail/${id}`,
+        `https://resturantbackend-rwdm.onrender.com/api/editBookingDetail/${id}`,
         {
           ...data,
           status: status,
@@ -182,7 +182,7 @@ export const deleteBooking = createAsyncThunk(
   async (id: string, { rejectWithValue }) => {
     try {
       const res = await axios.delete(
-        `http://localhost:5000/api/deleteBooking/${id}`
+        `https://resturantbackend-rwdm.onrender.com/api/deleteBooking/${id}`
       );
       return { id, data: res.data };
     } catch (error) {
@@ -195,7 +195,7 @@ export const getDineIn = createAsyncThunk(
   "getDineIn",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get("http://localhost:5000/api/getDineIn");
+      const res = await axios.get("https://resturantbackend-rwdm.onrender.com/api/getDineIn");
       return res.data;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -207,7 +207,7 @@ export const getTakeAway = createAsyncThunk(
   "getTakeAway",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get("http://localhost:5000/api/getTakeAway");
+      const res = await axios.get("https://resturantbackend-rwdm.onrender.com/api/getTakeAway");
       return res.data;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -223,7 +223,7 @@ export const updateDineInStatus = createAsyncThunk(
   ) => {
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/updateDineInStatus/${id}`,
+        `https://resturantbackend-rwdm.onrender.com/api/updateDineInStatus/${id}`,
         {
           foodStatus: status,
         }
@@ -246,7 +246,7 @@ export const updateTakeAwayStatus = createAsyncThunk(
     console.log("ii", id, status);
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/updateTakeAwayStatus/${id}`,
+        `https://resturantbackend-rwdm.onrender.com/api/updateTakeAwayStatus/${id}`,
         {
           foodStatus: status,
         }
@@ -264,7 +264,7 @@ export const authorizeUser = createAsyncThunk(
   async (__, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/admin/verify",
+        "https://resturantbackend-rwdm.onrender.com/api/admin/verify",
         { withCredentials: true }
       );
       return response.data.user;
@@ -280,7 +280,7 @@ export const deleteDineInReceit = createAsyncThunk(
     console.log(id);
     try {
       const res = await axios.delete(
-        `http://localhost:5000/api/deleteDineReceit/${id}`
+        `https://resturantbackend-rwdm.onrender.com/api/deleteDineReceit/${id}`
       );
       return { id, data: res.data };
     } catch (error) {
@@ -294,7 +294,7 @@ export const deleteTakeawayReceit = createAsyncThunk(
   async ({ id }: { id?: string }, { rejectWithValue }) => {
     try {
       const res = await axios.delete(
-        `http://localhost:5000/api/deleteTakeawayReceit/${id}`
+        `https://resturantbackend-rwdm.onrender.com/api/deleteTakeawayReceit/${id}`
       );
       return { id, data: res.data };
     } catch (error) {
@@ -310,7 +310,7 @@ export const signupDetail = createAsyncThunk(
     console.log("slice", finaldata);
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/signupData`,
+        `https://resturantbackend-rwdm.onrender.com/api/signupData`,
         finaldata
       );
 
@@ -326,7 +326,7 @@ export const loginData = createAsyncThunk(
   async ({ data }: { data: formdata }, { rejectWithValue }) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/loginData",
+        "https://resturantbackend-rwdm.onrender.com/api/loginData",
         data,
         {
           withCredentials: true,

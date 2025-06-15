@@ -47,7 +47,7 @@ function DisheshCategogy({ setIsShowCategory, isShowCategory }: ManageDishes) {
               <div className="flex   w-full  gap-2 items-center">
                 <div className="h-10  w-12 flex items-center justify-center rounded-2xl overflow-hidden bg-orange-300">
                   <img
-                    src={`http://localhost:5000/uploads/${e.image}`}
+                    src={`https://resturantbackend-rwdm.onrender.com/uploads/${e.image}`}
                     alt=""
                     className="object-cover h-12"
                   />

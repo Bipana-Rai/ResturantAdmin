@@ -59,7 +59,7 @@ function DishesList({ setIsShowDishes }: ManageDishes) {
           </div>
           <div className="flex items-center justify-center bg-gray-200 p-1">
             <img
-              src={`http://localhost:5000/uploads/${e.dishImage}`}
+              src={`https://resturantbackend-rwdm.onrender.com/uploads/${e.dishImage}`}
               alt=""
               className="h-19 w-33"
             />

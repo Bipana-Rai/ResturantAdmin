@@ -17,7 +17,7 @@ function Logout({ setLogout }: sidebarProps) {
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://localhost:5000/api/logout",
+        "https://resturantbackend-rwdm.onrender.com/api/logout",
         {},
         { withCredentials: true }
       );

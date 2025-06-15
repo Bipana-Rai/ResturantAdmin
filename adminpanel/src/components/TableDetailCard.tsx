@@ -49,7 +49,7 @@ function TableDetailCard({
           status: "paid",
           paidAt: new Date().toISOString(),
         };
-        await axios.post("http://localhost:5000/api/receits", payload);
+        await axios.post("https://resturantbackend-rwdm.onrender.com/api/receits", payload);
         toast.success("Payment completed and order saved!");
         if (data?.status === "dine In") {
           dispatch(deleteDineInReceit({ id: data?._id }));

@@ -23,7 +23,7 @@ function ResetPassword() {
   const onSubmit: SubmitHandler<ResetPasswordForm> = async (data) => {
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/reset-password/${id}/${token}`,
+        `https://resturantbackend-rwdm.onrender.com/api/reset-password/${id}/${token}`,
         { password: data.password }
       );
       toast.success("Reset password successfully");
