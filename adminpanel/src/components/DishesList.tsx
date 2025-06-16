@@ -59,7 +59,12 @@ function DishesList({ setIsShowDishes }: ManageDishes) {
           </div>
           <div className="flex items-center justify-center bg-gray-200 p-1">
             <img
-              src={`http://localhost:3000/uploads/${e.dishImage}`}
+              src={`${
+                typeof window !== "undefined" &&
+                window.location.hostname === "localhost"
+                  ? "http://localhost:3000"
+                  : "https://resturant-admin-ten.vercel.app"
+              }/uploads/${e.dishImage}`}
               alt=""
               className="h-19 w-33"
             />
