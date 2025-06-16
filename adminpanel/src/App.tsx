@@ -20,7 +20,7 @@ import Authentication from "./components/Aurhentication";
 import ForgotPasswprd from "./components/ForgotPasswprd";
 import ResetPassword from "./components/ResetPassword";
 
-const socket = io("https://resturantbackend-rwdm.onrender.com", {
+const socket = io("https://resturantbackend-11hb.onrender.com", {
   withCredentials: true,
 });
 
