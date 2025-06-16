@@ -8,7 +8,7 @@ export const addCategory = createAsyncThunk(
     try {
       const response = await axios.post(
         "https://resturantbackend-11hb.onrender.com/api/addCategory",
-        
+
         formData,
         {
           headers: {
@@ -29,7 +29,9 @@ export const getCategory = createAsyncThunk(
   "getcategory",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("https://resturantbackend-11hb.onrender.com/api/getCategory");
+      const response = await axios.get(
+        "https://resturantbackend-11hb.onrender.com/api/getCategory"
+      );
 
       return response.data;
     } catch (error) {
@@ -63,7 +65,9 @@ export const getDishes = createAsyncThunk(
   "getDishes",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("https://resturantbackend-11hb.onrender.com/api/getDish");
+      const response = await axios.get(
+        "https://resturantbackend-11hb.onrender.com/api/getDish"
+      );
       return response.data;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -75,7 +79,10 @@ export const addTable = createAsyncThunk(
   "addTable",
   async (data: TableData, { rejectWithValue }) => {
     try {
-      const res = await axios.post("https://resturantbackend-11hb.onrender.com/api/addTable", data);
+      const res = await axios.post(
+        "https://resturantbackend-11hb.onrender.com/api/addTable",
+        data
+      );
       return res.data;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -87,7 +94,9 @@ export const getTable = createAsyncThunk(
   "getTable",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("https://resturantbackend-11hb.onrender.com/api/getTable");
+      const response = await axios.get(
+        "https://resturantbackend-11hb.onrender.com/api/getTable"
+      );
       return response.data;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -147,7 +156,9 @@ export const getBookingDetail = createAsyncThunk(
   "getBookingDetail",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get("https://resturantbackend-11hb.onrender.com/api/getBookingDetail");
+      const res = await axios.get(
+        "https://resturantbackend-11hb.onrender.com/api/getBookingDetail"
+      );
       return res.data;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -196,7 +207,9 @@ export const getDineIn = createAsyncThunk(
   "getDineIn",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get("https://resturantbackend-11hb.onrender.com/api/getDineIn");
+      const res = await axios.get(
+        "https://resturantbackend-11hb.onrender.com/api/getDineIn"
+      );
       return res.data;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -208,7 +221,9 @@ export const getTakeAway = createAsyncThunk(
   "getTakeAway",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get("https://resturantbackend-11hb.onrender.com/api/getTakeAway");
+      const res = await axios.get(
+        "https://resturantbackend-11hb.onrender.com/api/getTakeAway"
+      );
       return res.data;
     } catch (error) {
       const err = error as AppAxiosError;
@@ -263,11 +278,11 @@ export const updateTakeAwayStatus = createAsyncThunk(
 export const authorizeUser = createAsyncThunk(
   "authorizeUser",
   async (__, { rejectWithValue }) => {
-    
+    const token = localStorage.getItem("jwt");
     try {
       const response = await axios.get(
         "https://resturantbackend-11hb.onrender.com/api/admin/verify",
-        { withCredentials: true }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       return response.data.user;
     } catch (error) {
@@ -329,11 +344,12 @@ export const loginData = createAsyncThunk(
     try {
       const res = await axios.post(
         "https://resturantbackend-11hb.onrender.com/api/loginData",
-        data,
-        {
-          withCredentials: true,
-        }
+        data
       );
+      const token = res.data.token;
+      if (token) {
+        localStorage.setItem("jwt", token);
+      }
       console.log("token", res.data);
       return res.data;
     } catch (error) {
@@ -342,8 +358,6 @@ export const loginData = createAsyncThunk(
     }
   }
 );
-
-
 
 interface Category {
   category: string;
@@ -425,7 +439,6 @@ interface CategoryState {
   bookingDetail: BookedData[];
   user: userInfo | null;
   takeawayOrder: orderData[];
-
 }
 
 const initialState: CategoryState = {
@@ -618,7 +631,7 @@ const itemSlice = createSlice({
         const { id } = action.payload;
         state.orderDetail = state.orderDetail.filter((e) => e._id !== id);
       })
-         .addCase(deleteTakeawayReceit.fulfilled, (state, action) => {
+      .addCase(deleteTakeawayReceit.fulfilled, (state, action) => {
         state.loading = false;
         const { id } = action.payload;
         state.takeawayOrder = state.takeawayOrder.filter((e) => e._id !== id);
