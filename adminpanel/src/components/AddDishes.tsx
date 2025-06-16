@@ -68,7 +68,7 @@ function AddDishes({ setIsShowDishes }: ManageDishes) {
           encType="multipart/form-data"
         >
           <div className="flex flex-col items-center">
-            <div className="h-[120px] relative w-[120px]  bg-gray-200  rounded-full flex items-center justify-center">
+            <div className="h-[120px] relative w-[120px] overflow-hidden bg-gray-200  rounded-full flex items-center justify-center">
               <label className=" h-7 w-7 bg-gray-300 flex items-center justify-center text-sm rounded-full cursor-pointer absolute right-1 top-22">
                 <FaCamera />
                 <input
