@@ -21,6 +21,7 @@ import ForgotPasswprd from "./components/ForgotPasswprd";
 import ResetPassword from "./components/ResetPassword";
 
 const socket = io("https://resturantbackend-11hb.onrender.com", {
+  transports: ["websocket", "polling"],
   withCredentials: true,
 });
 
@@ -43,19 +44,19 @@ function App() {
       <ToastContainer />
 
       <Routes>
-        <Route path="/" element={<Authentication/>}/>
-         <Route path="/recoverypassword" element={<ForgotPasswprd />} />
+        <Route path="/" element={<Authentication />} />
+        <Route path="/recoverypassword" element={<ForgotPasswprd />} />
         <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
         <Route element={<MainLayout />}>
           <Route element={<ProtectedRoute />}>
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/orderline" element={<OrderLine />} />
-          <Route path="/managedishes/all" element={<ManageDishes />} />
-          <Route path="/managetable" element={<ManageTables />} />
-          <Route path="/managedishes/:category" element={<ManageDishes />} />
-          <Route path="/managebooking" element={<ManageBooking />} />
-          <Route path="/notification" element={<Notification />} />
-          <Route path="/singleData/:id" element={<SingleOrder />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/orderline" element={<OrderLine />} />
+            <Route path="/managedishes/all" element={<ManageDishes />} />
+            <Route path="/managetable" element={<ManageTables />} />
+            <Route path="/managedishes/:category" element={<ManageDishes />} />
+            <Route path="/managebooking" element={<ManageBooking />} />
+            <Route path="/notification" element={<Notification />} />
+            <Route path="/singleData/:id" element={<SingleOrder />} />
           </Route>
         </Route>
       </Routes>
