@@ -26,7 +26,7 @@ function ForgotPasswprd() {
   const onSubmit: SubmitHandler<ForgotPasswordForm> = async (data) => {
     setLoading(true);
     try {
-      await axios.post("https://resturantbackend-rwdm.onrender.com/api/auth/forgot-password", data);
+      await axios.post("https://resturantbackend-11hb.onrender.com/api/auth/forgot-password", data);
       toast.success("link send successfully to your eamil..");
     } catch (error) {
       const err = error as AppAxiosError;
