@@ -347,6 +347,7 @@ export const loginData = createAsyncThunk(
         data
       );
       const token = res.data.token;
+      console.log("tttt",token)
       if (token) {
         localStorage.setItem("jwt", token);
       }
